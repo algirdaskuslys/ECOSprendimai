@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import sample.Main;
+import sample.utils.Constants;
 import sample.utils.Validation;
 
 import java.awt.event.ActionEvent;
@@ -49,7 +50,7 @@ public class RegisterController extends Main {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../view/login.fxml"));
             Stage loginStage = new Stage();
-            Scene scene = new Scene(root, 500, 300);
+            Scene scene = new Scene(root, Constants.LOGIN_REGISTER_WINDOW_WIDTH, Constants.LOGIN_REGISTER_WINDOW_HEIGHT);
             scene.getStylesheets().add(getClass().getResource("../view/CSS.css").toExternalForm());
             loginStage.setTitle("Prisijungimas");
             loginStage.setScene(scene);
