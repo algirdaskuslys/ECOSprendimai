@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
+   <children>
+      <Button fx:id="close_button" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBackToLogin" style="-fx-background-color: #f5d787;" text="X" />
+      <TableView layoutX="63.0" layoutY="59.0" prefHeight="327.0" prefWidth="475.0">
+        <columns>
+          <TableColumn prefWidth="38.0" text="No." />
+          <TableColumn prefWidth="116.0" text="Catalog No." />
+            <TableColumn prefWidth="134.0" text="Symbol" />
+            <TableColumn prefWidth="68.0" text="Price net." />
+            <TableColumn prefWidth="118.0" text="Stock" />
+        </columns>
+      </TableView>
+      <ComboBox layoutX="121.0" layoutY="27.0" prefWidth="150.0" />
+      <ComboBox layoutX="371.0" layoutY="27.0" prefWidth="150.0" />
+      <Label layoutX="63.0" layoutY="27.0" prefHeight="25.0" prefWidth="58.0" text="Label" />
+      <Label layoutX="313.0" layoutY="27.0" prefHeight="25.0" prefWidth="58.0" text="Label" />
+      <ScrollBar layoutX="538.0" layoutY="59.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" />
+   </children>
+</AnchorPane>
