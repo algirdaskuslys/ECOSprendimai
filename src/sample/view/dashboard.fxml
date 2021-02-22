@@ -5,8 +5,8 @@
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
    <children>
-      <Button fx:id="close_button" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBackToLogin" style="-fx-background-color: #f5d787;" text="X" />
-      <TableView layoutX="63.0" layoutY="59.0" prefHeight="327.0" prefWidth="475.0">
+      <Button fx:id="close_button" layoutX="1199.0" layoutY="11.0" mnemonicParsing="false" onAction="#goBackToLogin" style="-fx-background-color: #f5d787;" text="X" />
+      <TableView layoutX="645.0" layoutY="59.0" prefHeight="327.0" prefWidth="475.0">
         <columns>
           <TableColumn prefWidth="38.0" text="No." />
           <TableColumn prefWidth="116.0" text="Catalog No." />
@@ -15,10 +15,56 @@
             <TableColumn prefWidth="118.0" text="Stock" />
         </columns>
       </TableView>
-      <ComboBox layoutX="121.0" layoutY="27.0" prefWidth="150.0" />
-      <ComboBox layoutX="371.0" layoutY="27.0" prefWidth="150.0" />
-      <Label layoutX="63.0" layoutY="27.0" prefHeight="25.0" prefWidth="58.0" text="Label" />
-      <Label layoutX="313.0" layoutY="27.0" prefHeight="25.0" prefWidth="58.0" text="Label" />
-      <ScrollBar layoutX="538.0" layoutY="59.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" />
+      <ComboBox layoutX="703.0" layoutY="27.0" prefWidth="150.0" />
+      <ComboBox layoutX="953.0" layoutY="27.0" prefWidth="150.0" />
+      <Label layoutX="645.0" layoutY="27.0" prefHeight="25.0" prefWidth="58.0" text="Label" />
+      <Label layoutX="895.0" layoutY="27.0" prefHeight="25.0" prefWidth="58.0" text="Label" />
+      <ScrollBar layoutX="1102.0" layoutY="59.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" />
+       <TabPane layoutX="101.0" layoutY="49.0">
+           <Tab fx:id="tab1" text="Klasifikacija1">
+               <TreeView fx:id="product_catalog_tree" layoutX="100.0" layoutY="62.0" prefHeight="327.0" prefWidth="384.0" />
+           </Tab>
+           <Tab fx:id="tab2" text="Klasifikacija2" />
+       </TabPane>
+      <Button layoutX="433.0" layoutY="15.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="371.0" layoutY="15.0" mnemonicParsing="false" text="Button" />
+      <TextField layoutX="213.0" layoutY="15.0" />
+      <Label layoutX="137.0" layoutY="19.0" text="Label" />
+      <TitledPane animated="false" layoutX="1370.0" layoutY="64.0" prefHeight="318.0" prefWidth="376.0" text="untitled">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="284.0" prefWidth="368.0">
+               <children>
+                  <Label layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="77.0" text="Cat. number :" />
+                  <Button layoutX="278.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
+                  <Label layoutX="114.0" layoutY="14.0" prefHeight="17.0" prefWidth="130.0" text="Label" />
+                  <Label layoutX="21.0" layoutY="35.0" prefHeight="17.0" prefWidth="220.0" text="Label" />
+                  <Label layoutX="21.0" layoutY="52.0" prefHeight="17.0" prefWidth="122.0" text="Label" />
+                  <Label layoutX="21.0" layoutY="85.0" prefHeight="17.0" prefWidth="94.0" text="Basic net price :" />
+                  <Label layoutX="21.0" layoutY="123.0" prefHeight="17.0" prefWidth="109.0" text="Price with discount :" />
+                  <Label layoutX="21.0" layoutY="104.0" prefHeight="17.0" prefWidth="84.0" text="Discount :" />
+                  <Label layoutX="21.0" layoutY="151.0" prefHeight="17.0" prefWidth="91.0" text="Availability :" />
+                  <Label layoutX="21.0" layoutY="187.0" prefHeight="17.0" prefWidth="112.0" text="Minimum amount :" />
+                  <Label layoutX="21.0" layoutY="204.0" prefHeight="17.0" prefWidth="107.0" text="Discount group :" />
+                  <Label layoutX="21.0" layoutY="221.0" prefHeight="17.0" prefWidth="118.0" text="Familiy of products :" />
+                  <Label layoutX="159.0" layoutY="85.0" prefHeight="17.0" prefWidth="35.0" text="Label" />
+                  <Label layoutX="21.0" layoutY="247.0" prefHeight="17.0" prefWidth="85.0" text="EAN code :" />
+                  <Label layoutX="159.0" layoutY="104.0" prefHeight="17.0" prefWidth="36.0" text="Label" />
+                  <Label layoutX="159.0" layoutY="123.0" prefHeight="17.0" prefWidth="37.0" text="Label" />
+                  <Label layoutX="159.0" layoutY="151.0" prefHeight="17.0" prefWidth="127.0" text="Label" />
+                  <Label layoutX="159.0" layoutY="168.0" prefHeight="17.0" prefWidth="46.0" text="Label" />
+                  <Label layoutX="159.0" layoutY="187.0" prefHeight="17.0" prefWidth="85.0" text="Label" />
+                  <Label layoutX="159.0" layoutY="204.0" prefHeight="17.0" prefWidth="91.0" text="Label" />
+                  <Label layoutX="159.0" layoutY="221.0" prefHeight="17.0" prefWidth="85.0" text="Label" />
+                  <Label layoutX="159.0" layoutY="247.0" prefHeight="17.0" prefWidth="85.0" text="Label" />
+                  <Label layoutX="194.0" layoutY="85.0" prefHeight="17.0" prefWidth="67.0" text="Eur Stock1" />
+                  <Label layoutX="196.0" layoutY="104.0" prefHeight="17.0" prefWidth="36.0" text="\%" />
+                  <Label layoutX="196.0" layoutY="123.0" prefHeight="17.0" prefWidth="36.0" text="Eur" />
+                  <Label layoutX="205.0" layoutY="168.0" prefHeight="17.0" prefWidth="36.0" text="vnt." />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <Label layoutX="1392.0" layoutY="257.0" prefHeight="17.0" prefWidth="85.0" text="Package :" />
+       
    </children>
 </AnchorPane>

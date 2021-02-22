@@ -48,10 +48,10 @@ public class RegisterController extends Main {
 
     public void goToLogin(){
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("../view/login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(Constants.LOGIN_VIEW_DIRECTORY_PATH));
             Stage loginStage = new Stage();
             Scene scene = new Scene(root, Constants.LOGIN_REGISTER_WINDOW_WIDTH, Constants.LOGIN_REGISTER_WINDOW_HEIGHT);
-            scene.getStylesheets().add(getClass().getResource("../view/CSS.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
             loginStage.setTitle("Prisijungimas");
             loginStage.setScene(scene);
             loginStage.show();
