@@ -18,6 +18,7 @@ public class LoginController {
     public TextField username_textfield;
     public PasswordField password_passwordfield;
     public Button register_button;
+    public Button dashboard_button;
 
     public void login() {
         if (Validation.isValidUsername(username_textfield.getText()) && Validation.isValidPassword(password_passwordfield.getText())) {
@@ -57,9 +58,10 @@ public class LoginController {
             Parent root = FXMLLoader.load(getClass().getResource(Constants.DASHBOARD_VIEW_DIRECTORY_PATH));
             Stage dashboardStage = new Stage();
             Scene scene = new Scene(root, Constants.DASHBOARD_WINDOW_WIDTH, Constants.DASHBOARD_WINDOW_HEIGHT);
-            scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
-            dashboardStage.setTitle("Langas");
+            //scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
+            dashboardStage.setTitle("Produktų peržiūros langas");
             dashboardStage.setScene(scene);
+            //dashboardStage.setMaximized(true);
             dashboardStage.show();
             windowCloseLoginButton();
 

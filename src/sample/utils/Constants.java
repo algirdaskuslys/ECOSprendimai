@@ -4,7 +4,7 @@ public class Constants {
 
     // langu dydziu matmenys
     public static final int DASHBOARD_WINDOW_WIDTH = 1920;
-    public static final int DASHBOARD_WINDOW_HEIGHT = 800;
+    public static final int DASHBOARD_WINDOW_HEIGHT = 450;
     public static final int LOGIN_REGISTER_WINDOW_WIDTH = 500;
     public static final int LOGIN_REGISTER_WINDOW_HEIGHT = 300;
 

@@ -28,6 +28,7 @@
             <Button fx:id="username_button" layoutX="120.0" layoutY="240.0" mnemonicParsing="false" onAction="#login" text="Prisijungti" />
             <Button fx:id="register_button" layoutX="337.0" layoutY="240.0" mnemonicParsing="false" onAction="#register" text="Registruoti" />
             <Label layoutX="440.0" layoutY="12.0" prefHeight="25.0" prefWidth="43.0" text="v: 0.1" textFill="#b9b9b9" />
+            <Button fx:id="dashboard_button" layoutX="14.0" layoutY="240.0" mnemonicParsing="false" text="Dashboard" onAction="#goTodashboard"/>
          </children>
          <opaqueInsets>
             <Insets />
