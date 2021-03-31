@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
-      <module name="ECOSprendimai" target="1.5" />
+      <module name="ECOSprendimai" target="7" />
     </bytecodeTargetLevel>
   </component>
 </project>
