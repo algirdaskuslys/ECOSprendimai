@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
+   <children>
+      <Button fx:id="close_button" layoutX="1318.0" layoutY="13.0" mnemonicParsing="false" onAction="#goBackToLogin" style="-fx-background-color: #f5d787;" text="X" />
+      <TableView fx:id="table" layoutX="423.0" layoutY="56.0" prefHeight="356.0" prefWidth="498.0">
+        <columns>
+          <TableColumn prefWidth="46.0" text="Eil. nr." />
+          <TableColumn fx:id="catalogNo" prefWidth="87.0" text="Katalogo nr." />
+            <TableColumn fx:id="symbol" prefWidth="252.0" text="Simbolis" />
+            <TableColumn fx:id="price" prefWidth="50.0" text="Kaina" />
+            <TableColumn fx:id="stock" prefWidth="62.0" text="Atsargos" />
+        </columns>
+      </TableView>
+       <TabPane layoutX="33.0" layoutY="56.0">
+           <Tab fx:id="tab1" text="Klasifikacija1">
+               <TreeView fx:id="product_catalog_tree" layoutX="100.0" layoutY="62.0" prefHeight="327.0" prefWidth="384.0" />
+           </Tab>
+           <Tab fx:id="tab2" text="Klasifikacija2" />
+       </TabPane>
+      <Button layoutX="360.0" layoutY="16.0" mnemonicParsing="false" text="Filtruoti" />
+      <Button layoutX="284.0" layoutY="16.0" mnemonicParsing="false" text="Ieškoti" />
+      <TextField layoutX="85.0" layoutY="16.0" prefHeight="25.0" prefWidth="172.0" />
+      <Label layoutX="36.0" layoutY="20.0" text="Ieškoti :" />
+      <TitledPane animated="false" layoutX="929.0" layoutY="56.0" prefHeight="356.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="403.0">
+               <children>
+                  <Label layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="77.0" text="Kat. numeris :" />
+                  <Button fx:id="open_file" layoutX="228.0" layoutY="10.0" mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Atnaujinti kainas..." />
+                  <Label layoutX="114.0" layoutY="14.0" prefHeight="17.0" prefWidth="90.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="21.0" layoutY="85.0" prefHeight="17.0" prefWidth="94.0" text="Kaina :" />
+                  <Label layoutX="21.0" layoutY="123.0" prefHeight="17.0" prefWidth="109.0" text="Kaina su nuolaida :" />
+                  <Label layoutX="21.0" layoutY="104.0" prefHeight="17.0" prefWidth="84.0" text="Nuolaida :" />
+                  <Label layoutX="21.0" layoutY="151.0" prefHeight="17.0" prefWidth="101.0" text="Teikimo terminas :" />
+                  <Label layoutX="21.0" layoutY="187.0" prefHeight="17.0" prefWidth="112.0" text="Minimalus kiekis :" />
+                  <Label layoutX="21.0" layoutY="204.0" prefHeight="17.0" prefWidth="107.0" text="Nuolaidų grupė :" />
+                  <Label layoutX="21.0" layoutY="221.0" prefHeight="17.0" prefWidth="118.0" text="Produktų šeima :" />
+                  <Label layoutX="157.0" layoutY="85.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="21.0" layoutY="247.0" prefHeight="17.0" prefWidth="85.0" text="EAN kodas :" />
+                  <Label layoutX="157.0" layoutY="104.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="157.0" layoutY="123.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="157.0" layoutY="151.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="157.0" layoutY="168.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="157.0" layoutY="187.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="157.0" layoutY="204.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="157.0" layoutY="221.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="157.0" layoutY="247.0" prefHeight="17.0" prefWidth="30.0" style="-fx-font-weight: bold;" text="0" />
+                  <Label layoutX="194.0" layoutY="85.0" prefHeight="17.0" prefWidth="67.0" text="Eur už 1 vnt." />
+                  <Label layoutX="196.0" layoutY="104.0" prefHeight="17.0" prefWidth="36.0" text="\%" />
+                  <Label layoutX="196.0" layoutY="123.0" prefHeight="17.0" prefWidth="36.0" text="Eur" />
+                  <Label layoutX="196.0" layoutY="168.0" prefHeight="17.0" prefWidth="36.0" text="vnt." />
+                  <Label layoutX="22.0" layoutY="169.0" prefHeight="17.0" prefWidth="85.0" text="Paketas :" />
+                  <Button layoutX="230.0" layoutY="108.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="?" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+      <Label layoutX="1179.0" layoutY="17.0" text="Vartotojas :" />
+      <Label layoutX="1245.0" layoutY="17.0" prefHeight="17.0" prefWidth="66.0" style="-fx-font-weight: bold;" text="Julius" />
+       
+   </children>
+</AnchorPane>
