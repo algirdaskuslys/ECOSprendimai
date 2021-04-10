@@ -3,16 +3,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
    <children>
       <Button fx:id="close_button" layoutX="1318.0" layoutY="13.0" mnemonicParsing="false" onAction="#goBackToLogin" style="-fx-background-color: #f5d787;" text="X" />
-      <TableView layoutX="423.0" layoutY="56.0" prefHeight="356.0" prefWidth="498.0">
+      <TableView fx:id="table" layoutX="423.0" layoutY="56.0" prefHeight="356.0" prefWidth="498.0">
         <columns>
           <TableColumn prefWidth="46.0" text="Eil. nr." />
-          <TableColumn prefWidth="87.0" text="Katalogo nr." />
-            <TableColumn prefWidth="252.0" text="Simbolis" />
-            <TableColumn prefWidth="50.0" text="Kaina" />
-            <TableColumn prefWidth="62.0" text="Atsargos" />
+          <TableColumn fx:id="catalogNo" prefWidth="87.0" text="Katalogo nr." />
+            <TableColumn fx:id="symbol" prefWidth="252.0" text="Simbolis" />
+            <TableColumn fx:id="price" prefWidth="50.0" text="Kaina" />
+            <TableColumn fx:id="stock" prefWidth="62.0" text="Atsargos" />
         </columns>
       </TableView>
        <TabPane layoutX="33.0" layoutY="56.0">
@@ -30,7 +30,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="403.0">
                <children>
                   <Label layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="77.0" text="Kat. numeris :" />
-                  <Button layoutX="228.0" layoutY="10.0" mnemonicParsing="false" text="Elementas kainyne" />
+                  <Button fx:id="open_file" layoutX="228.0" layoutY="10.0" mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Atnaujinti kainas..." />
                   <Label layoutX="114.0" layoutY="14.0" prefHeight="17.0" prefWidth="90.0" style="-fx-font-weight: bold;" text="0" />
                   <Label layoutX="21.0" layoutY="85.0" prefHeight="17.0" prefWidth="94.0" text="Kaina :" />
                   <Label layoutX="21.0" layoutY="123.0" prefHeight="17.0" prefWidth="109.0" text="Kaina su nuolaida :" />
