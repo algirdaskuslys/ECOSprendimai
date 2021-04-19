@@ -561,6 +561,17 @@ public class DashboardController extends Main implements Initializable {
             e.printStackTrace();
         }
         for (ProductCatalog product : products) {
+            // TODO: 1. įrašyti produktą į lentelę
+            ProductCatalogDAO.insert(product);
+            // TODO: 2. Atnaujinti tik tas produktų kainas, kurios skiriasi nuo xlsx faile esančių kainų, nes pasikeitė
+            // 2.1. Arba vienu kreipimusi į db išsitraukti visą sąrašą produktų (ProductCatalogDAO.displayAllItems())
+            // 2.1. Arba kiekvieną kartą prieš įrašant konkretų produktą, gauti informaciją apie jo
+            //      kainą db (ProductCatalogDAO.findByName(excelProduct.getName()))
+            // if (dbProduct.getPrice() != excelProduct.getPrice()) {
+            //      ProductCatalogDAO.update(excelProduct);
+            // }
+            // TODO: 3. Testavimas- 1) pasižiūrėti ar pasikeitus kainoms, atnaujinami įrašai db.
+            //                      2) pasižiūrėti ar nepasikeitus kainoms, įrašai db neatnaujinami.
             System.out.println(product.toString());
         }
    //     loadDataToTable();

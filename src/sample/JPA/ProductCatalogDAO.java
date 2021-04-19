@@ -39,14 +39,19 @@ public static ArrayList<ProductCatalog> displayAllItems(){
     return produktuKatalogai;
 }
 
-public static void find(){
+public static ProductCatalog findByName(String name){
     EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
 
+    // Pasichekinti užklausą į db pagal product name
     ProductCatalog productCatalog = entityManager.find( ProductCatalog.class, 1 );
 
     System.out.println("employee ID = " + productCatalog.getCatalogNo( ));
     System.out.println("employee NAME = " + productCatalog.getSymbol( ));
     System.out.println("employee SALARY = " + productCatalog.getPriceNet( ));
     System.out.println("employee DESIGNATION = " + productCatalog.getStock( ));
+
+    return new ProductCatalog();
 }
+
+//TODO: create update(ProductCatalog productCatalog) method for updating price for particular product
 }
