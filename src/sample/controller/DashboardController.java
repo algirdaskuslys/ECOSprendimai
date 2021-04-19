@@ -494,7 +494,7 @@ public class DashboardController extends Main implements Initializable {
 
         table.getColumns().addAll(id, upload, position, employer, pay);
 
-        ArrayList<ProductCatalog> productCatalogs = ProductCatalogDAO.displayAllItems();
+        List<ProductCatalog> productCatalogs = ProductCatalogDAO.displayAllItems();
         System.out.println(productCatalogs);
 
 
@@ -561,7 +561,7 @@ public class DashboardController extends Main implements Initializable {
             e.printStackTrace();
         }
         for (ProductCatalog product : products) {
-            // TODO: 1. įrašyti produktą į lentelę
+            // TODO: 1. Padaryta
             ProductCatalogDAO.insert(product);
             // TODO: 2. Atnaujinti tik tas produktų kainas, kurios skiriasi nuo xlsx faile esančių kainų, nes pasikeitė
             // 2.1. Arba vienu kreipimusi į db išsitraukti visą sąrašą produktų (ProductCatalogDAO.displayAllItems())
@@ -572,7 +572,7 @@ public class DashboardController extends Main implements Initializable {
             // }
             // TODO: 3. Testavimas- 1) pasižiūrėti ar pasikeitus kainoms, atnaujinami įrašai db.
             //                      2) pasižiūrėti ar nepasikeitus kainoms, įrašai db neatnaujinami.
-            System.out.println(product.toString());
+            //System.out.println(product.toString());
         }
    //     loadDataToTable();
 
