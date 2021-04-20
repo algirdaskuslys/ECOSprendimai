@@ -75,5 +75,19 @@ public class CategoriesDAO {
         return categories;
     }
 
+    public static List<Categories> displayAllCategories(){
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        TypedQuery<Categories> query = entityManager.createQuery("Select e From Categories e", Categories.class);
+        List<Categories> categories = query.getResultList();
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        return categories;
+    }
+
 }
 

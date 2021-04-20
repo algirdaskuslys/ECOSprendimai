@@ -15,9 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import sample.JPA.ProductCatalog;
-import sample.JPA.ProductCatalogDAO;
-import sample.JPA.ReadExcelWithProductCatalog;
+import sample.JPA.*;
 import sample.Main;
 import sample.utils.Constants;
 
@@ -503,8 +501,8 @@ public class DashboardController extends Main implements Initializable {
 
         final ObservableList<ProductCatalog> data = FXCollections.observableArrayList(
 
-                new ProductCatalog(2020014, "Developer", 15, 2500, 1),
-                new ProductCatalog(2020014, "Developer", 15, 2500, 1)
+                //new ProductCatalog(2020014, "Developer", 15, 2500, 1),
+                //new ProductCatalog(2020014, "Developer", 15, 2500, 1)
         );
 
         id.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("Id"));
@@ -554,16 +552,23 @@ public class DashboardController extends Main implements Initializable {
     private void openFile(File file) {
 
 
-        List<ProductCatalog> products = null;
+        List<ProductCatalog> excelProducts = null;
+        List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
         try {
-            products = ReadExcelWithProductCatalog.readFileUsingPOI(file);
+            excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (ProductCatalog product : products) {
+
+        for (ProductCatalog excelProduct : excelProducts) {
+            for (ProductCatalog dbProduct : dbProducts){
+                if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()){
+                   ProductCatalogDAO.updateByCatalog_no(excelProduct.getPriceNet(), dbProduct.getId());
+                }
+           }
             // TODO: 1. Padaryta
-            ProductCatalogDAO.insert(product);
-            // TODO: 2. Atnaujinti tik tas produktų kainas, kurios skiriasi nuo xlsx faile esančių kainų, nes pasikeitė
+           // ProductCatalogDAO.insert(excelProduct);
+            // TODO: 2. Padaryta Atnaujinti tik tas produktų kainas, kurios skiriasi nuo xlsx faile esančių kainų, nes pasikeitė
             // 2.1. Arba vienu kreipimusi į db išsitraukti visą sąrašą produktų (ProductCatalogDAO.displayAllItems())
             // 2.1. Arba kiekvieną kartą prieš įrašant konkretų produktą, gauti informaciją apie jo
             //      kainą db (ProductCatalogDAO.findByName(excelProduct.getName()))
