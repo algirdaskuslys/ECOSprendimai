@@ -16,7 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadExcelWithProductCatalog {
     public static List<ProductCatalog> readFileUsingPOI(File file) throws IOException {
-        List<ProductCatalog> products = new ArrayList();
+        List<ProductCatalog> products = new ArrayList<>();
 
         //String excelFilePath = "C:\\Users\\Dovyd\\IdeaProjects\\ECOSprendimai\\target\\classes\\sample\\JPA\\products.xlsx";
         //File file = new File(excelFilePath);
@@ -65,4 +65,5 @@ public class ReadExcelWithProductCatalog {
 
         return products;
     }
+
 }

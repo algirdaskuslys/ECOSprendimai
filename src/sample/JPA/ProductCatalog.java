@@ -1,5 +1,7 @@
 package sample.JPA;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +9,6 @@ import javax.persistence.*;
 public class ProductCatalog {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "catalog_no")
         private int catalogNo;
         @Column(name = "symbol")
@@ -19,13 +20,15 @@ public class ProductCatalog {
         @Column(name = "group_id")
         private int groupId;
 
-        public ProductCatalog( int catalogNo, String symbol, double priceNet, int stock, int groupId) {
-            this.catalogNo = catalogNo;
-            this.symbol = symbol;
-            this.priceNet = priceNet;
-            this.stock = stock;
-            this.groupId = groupId;
-        }
+
+
+    public ProductCatalog(int catalogNo, String symbol, double priceNet, int stock, int groupId) {
+        this.catalogNo = catalogNo;
+        this.symbol = symbol;
+        this.priceNet = priceNet;
+        this.stock = stock;
+        this.groupId = groupId;
+    }
 
     public ProductCatalog() {
     }

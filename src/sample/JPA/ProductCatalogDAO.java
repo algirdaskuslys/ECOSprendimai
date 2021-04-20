@@ -1,10 +1,8 @@
 package sample.JPA;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductCatalogDAO {
 
@@ -24,34 +22,48 @@ public static void insert(ProductCatalog productCatalog){
 }
 
 
-public static ArrayList<ProductCatalog> displayAllItems(){
+public static List<ProductCatalog> displayAllItems(){
     EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
     EntityTransaction entityTransaction = entityManager.getTransaction();
     entityTransaction.begin();
 
-    ArrayList<ProductCatalog> produktuKatalogai = (ArrayList<ProductCatalog>) entityManager.
+    List<ProductCatalog> productCatalog = (ArrayList<ProductCatalog>) entityManager.
             createQuery("SELECT a FROM ProductCatalog a").
             getResultList();
 
     entityManager.getTransaction().commit();
     entityManager.close();
 
-    return produktuKatalogai;
+    return productCatalog;
 }
 
-public static ProductCatalog findByName(String name){
-    EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+    public static List<ProductCatalog> searchByName(String name) {
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
 
-    // Pasichekinti užklausą į db pagal product name
-    ProductCatalog productCatalog = entityManager.find( ProductCatalog.class, 1 );
+        TypedQuery<ProductCatalog> query = entityManager.createQuery("Select e From Categories e WHERE e.name = ?1", ProductCatalog.class);
+        List<ProductCatalog> productCatalog = query.setParameter(1, name).getResultList();
 
-    System.out.println("employee ID = " + productCatalog.getCatalogNo( ));
-    System.out.println("employee NAME = " + productCatalog.getSymbol( ));
-    System.out.println("employee SALARY = " + productCatalog.getPriceNet( ));
-    System.out.println("employee DESIGNATION = " + productCatalog.getStock( ));
+        entityManager.getTransaction().commit();
+        entityManager.close();
 
-    return new ProductCatalog();
-}
+        return productCatalog;
+    }
 
+
+    public static void updateByCatalog_no(ProductCatalog productCatalog, int catalog_no) {
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        ProductCatalog productCatalog1 = entityManager.find(ProductCatalog.class, catalog_no);
+        productCatalog1.setPriceNet(productCatalog.getPriceNet());
+
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+    }
 //TODO: create update(ProductCatalog productCatalog) method for updating price for particular product
 }
