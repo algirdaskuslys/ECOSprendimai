@@ -11,10 +11,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import javafx.stage.Window;
 import sample.JPA.*;
 import sample.Main;
 import sample.utils.Constants;
@@ -392,7 +396,7 @@ public class DashboardController extends Main implements Initializable {
         jungikliaiIrKistukiniaiLizdai.getChildren().add(pramoniniaiLizdai);
 
         //Instaliacinės prekės - Potinkinės dėžutės
-        TreeItem<String> muroDezute= new TreeItem<>("Dėžutė į mūrą");
+        TreeItem<String> muroDezute = new TreeItem<>("Dėžutė į mūrą");
         TreeItem<String> gipsoDezute = new TreeItem<>("Dėžutė į gipsą");
 
         //Instaliacinės prekės - Potinkinės dėžutės add
@@ -551,35 +555,70 @@ public class DashboardController extends Main implements Initializable {
 
     private void openFile(File file) {
 
+        Window parent = open_file.getScene().getWindow();
 
         List<ProductCatalog> excelProducts = null;
         List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
+
         try {
             excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        int countAffectedProducts = 0;
+
         for (ProductCatalog excelProduct : excelProducts) {
-            for (ProductCatalog dbProduct : dbProducts){
-                if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()){
-                   ProductCatalogDAO.updateByCatalog_no(excelProduct.getPriceNet(), dbProduct.getId());
+
+            boolean isNewProduct = true;
+
+            for (ProductCatalog dbProduct : dbProducts) {
+
+                if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
+                    isNewProduct = false;
+                    ProductCatalogDAO.updateByCatalog_no(excelProduct.getPriceNet(), dbProduct.getId());
+                    countAffectedProducts++;
+
+                } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet()) {
+                    isNewProduct = false;
+                    //do nothing
                 }
-           }
-            // TODO: 1. Padaryta
-           // ProductCatalogDAO.insert(excelProduct);
-            // TODO: 2. Padaryta Atnaujinti tik tas produktų kainas, kurios skiriasi nuo xlsx faile esančių kainų, nes pasikeitė
-            // 2.1. Arba vienu kreipimusi į db išsitraukti visą sąrašą produktų (ProductCatalogDAO.displayAllItems())
-            // 2.1. Arba kiekvieną kartą prieš įrašant konkretų produktą, gauti informaciją apie jo
-            //      kainą db (ProductCatalogDAO.findByName(excelProduct.getName()))
-            // if (dbProduct.getPrice() != excelProduct.getPrice()) {
-            //      ProductCatalogDAO.update(excelProduct);
-            // }
-            // TODO: 3. Testavimas- 1) pasižiūrėti ar pasikeitus kainoms, atnaujinami įrašai db.
-            //                      2) pasižiūrėti ar nepasikeitus kainoms, įrašai db neatnaujinami.
-            //System.out.println(product.toString());
+            }
+            if (isNewProduct) {
+                ProductCatalogDAO.insert(excelProduct);
+            }
         }
-   //     loadDataToTable();
+
+        Label label = new Label("Pakeite tiek prekiu :" + " " + countAffectedProducts);
+        final Popup popup = new Popup();
+        Button hide = new Button("Ok");
+        hide.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                popup.hide();
+            }
+        });
+        label.setStyle(" -fx-background-color: grey;");
+        label.setMinWidth(100);
+        label.setMinHeight(100);
+        popup.getContent().addAll(label, hide);
+        popup.show(parent);
+
+        // TODO: Atspausdinti pakeistu produktu skaiciu i nauja dialoga.
+        // TODO: 1. Padaryta
+        // ProductCatalogDAO.insert(excelProduct);
+        // TODO: 2. Padaryta Atenaujinti tik tas produktų kainas, kurios skiriasi nuo xlsx faile esančių kainų, nes pasikeitė
+        // 2.1. Arba vienu kreipimusi į db išsitraukti visą sąrašą produktų (ProductCatalogDAO.displayAllItems())
+        // 2.1. Arba kiekvieną kartą prieš įrašant konkretų produktą, gauti informaciją apie jo
+        //      kainą db (ProductCatalogDAO.findByName(excelProduct.getName()))
+        // if (dbProduct.getPrice() != excelProduct.getPrice()) {
+        //      ProductCatalogDAO.update(excelProduct);
+        // }
+        // TODO: 3. Testavimas- 1) pasižiūrėti ar pasikeitus kainoms, atnaujinami įrašai db.
+        //                      2) pasižiūrėti ar nepasikeitus kainoms, įrašai db neatnaujinami.
+        //System.out.println(product.toString());
+
+        //     loadDataToTable();
 
     }
 
