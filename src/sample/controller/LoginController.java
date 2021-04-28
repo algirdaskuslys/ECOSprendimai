@@ -19,6 +19,7 @@ public class LoginController {
     public PasswordField password_passwordfield;
     public Button register_button;
     public Button dashboard_button;
+    public Stage dashboardStage = new Stage();
 
     public void login() {
         if (Validation.isValidUsername(username_textfield.getText()) && Validation.isValidPassword(password_passwordfield.getText())) {

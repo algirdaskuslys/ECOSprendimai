@@ -5,10 +5,14 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Item_catalog")
+@Table(name = "Product_catalog")
 public class ProductCatalog {
 
         @Id
+        @Column(name = "id")
+        @GeneratedValue(generator = "incrementation")
+        @GenericGenerator(name = "incrementation", strategy = "increment")
+        private int id;
         @Column(name = "catalog_no")
         private int catalogNo;
         @Column(name = "symbol")
@@ -17,10 +21,20 @@ public class ProductCatalog {
         private double priceNet;
         @Column(name = "stock")
         private int stock;
+        //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+        //@JoinColumn(name = "group_id", referencedColumnName = "id")
         @Column(name = "group_id")
         private int groupId;
 
 
+    public ProductCatalog(int id, int catalogNo, String symbol, double priceNet, int stock, int groupId) {
+        this.id = id;
+        this.catalogNo = catalogNo;
+        this.symbol = symbol;
+        this.priceNet = priceNet;
+        this.stock = stock;
+        this.groupId = groupId;
+    }
 
     public ProductCatalog(int catalogNo, String symbol, double priceNet, int stock, int groupId) {
         this.catalogNo = catalogNo;
@@ -73,9 +87,18 @@ public class ProductCatalog {
         this.groupId = groupId;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "ProductCatalog" +
+                "id=" + id +
                 "catalogNo=" + catalogNo +
                 ", symbol='" + symbol + '\'' +
                 ", priceNet=" + priceNet +

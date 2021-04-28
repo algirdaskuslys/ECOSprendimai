@@ -27,9 +27,8 @@ public static List<ProductCatalog> displayAllItems(){
     EntityTransaction entityTransaction = entityManager.getTransaction();
     entityTransaction.begin();
 
-    List<ProductCatalog> productCatalog = (ArrayList<ProductCatalog>) entityManager.
-            createQuery("SELECT a FROM ProductCatalog a").
-            getResultList();
+    TypedQuery<ProductCatalog> query = entityManager.createQuery("Select e From ProductCatalog e", ProductCatalog.class);
+    List<ProductCatalog> productCatalog = query.getResultList();
 
     entityManager.getTransaction().commit();
     entityManager.close();
@@ -42,7 +41,7 @@ public static List<ProductCatalog> displayAllItems(){
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        TypedQuery<ProductCatalog> query = entityManager.createQuery("Select e From Categories e WHERE e.name = ?1", ProductCatalog.class);
+        TypedQuery<ProductCatalog> query = entityManager.createQuery("Select e From ProductCatalog e WHERE e.name = ?1", ProductCatalog.class);
         List<ProductCatalog> productCatalog = query.setParameter(1, name).getResultList();
 
         entityManager.getTransaction().commit();
@@ -52,15 +51,14 @@ public static List<ProductCatalog> displayAllItems(){
     }
 
 
-    public static void updateByCatalog_no(ProductCatalog productCatalog, int catalog_no) {
+    public static void updateByCatalog_no(double price, int id) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        ProductCatalog productCatalog1 = entityManager.find(ProductCatalog.class, catalog_no);
-        productCatalog1.setPriceNet(productCatalog.getPriceNet());
 
-
+        ProductCatalog productCatalog1 = entityManager.find(ProductCatalog.class, id);
+        productCatalog1.setPriceNet(price);
         entityManager.getTransaction().commit();
         entityManager.close();
 
