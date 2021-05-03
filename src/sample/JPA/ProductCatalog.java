@@ -3,81 +3,87 @@ package sample.JPA;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "Product_catalog")
 public class ProductCatalog {
 
-        @Id
-        @Column(name = "id")
-        @GeneratedValue(generator = "incrementation")
-        @GenericGenerator(name = "incrementation", strategy = "increment")
-        private int id;
-        @Column(name = "catalog_no")
-        private int catalogNo;
-        @Column(name = "symbol")
-        private String symbol;
-        @Column(name = "price_net")
-        private double priceNet;
-        @Column(name = "stock")
-        private int stock;
-        //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-        //@JoinColumn(name = "group_id", referencedColumnName = "id")
-        @Column(name = "group_id")
-        private int groupId;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(generator = "incrementation")
+    @GenericGenerator(name = "incrementation", strategy = "increment")
+    private int id;
+    @Column(name = "catalog_no")
+    private int catalogNo;
+    @Column(name = "symbol")
+    private String symbol;
+    @Column(name = "price_net")
+    private double priceNet;
+    @Column(name = "stock")
+    private int stock;
+    //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    //@JoinColumn(name = "group_id", referencedColumnName = "id")
+    @Column(name = "group_id")
+    private int groupId;
+    @Column(name = "date")
+    private Date date;
 
 
-    public ProductCatalog(int id, int catalogNo, String symbol, double priceNet, int stock, int groupId) {
+    public ProductCatalog(int id, int catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
         this.id = id;
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
         this.stock = stock;
         this.groupId = groupId;
+        this.date = date;
     }
 
-    public ProductCatalog(int catalogNo, String symbol, double priceNet, int stock, int groupId) {
+    public ProductCatalog(int catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
         this.stock = stock;
         this.groupId = groupId;
+        this.date = date;
     }
+
 
     public ProductCatalog() {
     }
 
-        public int getCatalogNo() {
-            return catalogNo;
-        }
+    public int getCatalogNo() {
+        return catalogNo;
+    }
 
-        public void setCatalogNo(int catalogNo) {
-            this.catalogNo = catalogNo;
-        }
+    public void setCatalogNo(int catalogNo) {
+        this.catalogNo = catalogNo;
+    }
 
-        public String getSymbol() {
-            return symbol;
-        }
+    public String getSymbol() {
+        return symbol;
+    }
 
-        public void setSymbol(String symbol) {
-            this.symbol = symbol;
-        }
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
 
-        public double getPriceNet() {
-            return priceNet;
-        }
+    public double getPriceNet() {
+        return priceNet;
+    }
 
-        public void setPriceNet(double priceNet) {
-            this.priceNet = priceNet;
-        }
+    public void setPriceNet(double priceNet) {
+        this.priceNet = priceNet;
+    }
 
-        public int getStock() {
-            return stock;
-        }
+    public int getStock() {
+        return stock;
+    }
 
-        public void setStock(int stock) {
-            this.stock = stock;
-        }
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
     public int getGroupId() {
         return groupId;
@@ -97,13 +103,15 @@ public class ProductCatalog {
 
     @Override
     public String toString() {
-        return "ProductCatalog" +
+        return "ProductCatalog{" +
                 "id=" + id +
-                "catalogNo=" + catalogNo +
+                ", catalogNo=" + catalogNo +
                 ", symbol='" + symbol + '\'' +
                 ", priceNet=" + priceNet +
                 ", stock=" + stock +
-                ", groupId=" + groupId;
+                ", groupId=" + groupId +
+                ", date=" + date +
+                '}';
     }
 }
 

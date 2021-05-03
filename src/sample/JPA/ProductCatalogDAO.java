@@ -63,5 +63,5 @@ public static List<ProductCatalog> displayAllItems(){
         entityManager.close();
 
     }
-//TODO: create update(ProductCatalog productCatalog) method for updating price for particular product
+
 }
