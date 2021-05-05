@@ -7,18 +7,21 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import javafx.stage.Window;
+import org.apache.poi.hssf.util.HSSFColor;
 import sample.JPA.*;
 import sample.Main;
 import sample.utils.Constants;
@@ -36,7 +39,8 @@ public class DashboardController extends Main implements Initializable {
 
     public Button close_button;
     public TreeView<String> product_catalog_tree;
-
+    @FXML
+    private TableView table;
     public Button open_file;
 
     public void goBackToLogin(ActionEvent actionEvent) {
@@ -62,7 +66,11 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void loadsProductsToCatalogTree() {
+
+
         TreeItem<String> root = new TreeItem<>("Visa klasifikacija");
+        root.setExpanded(true);
+
 
         TreeItem<String> skydai = new TreeItem<>("Skydai");
         TreeItem<String> apsvietimas = new TreeItem<>("Apšvietimas");
@@ -483,39 +491,40 @@ public class DashboardController extends Main implements Initializable {
     }
 
 
-    @FXML
-    private TableView table;
-
-    public void loadDataToTable() {
+    public void loadColumnToTable() {
 
         TableColumn id = new TableColumn("Id");
-        TableColumn upload = new TableColumn("catalogNo");
-        TableColumn position = new TableColumn("symbol");
-        TableColumn employer = new TableColumn("priceNet");
-        TableColumn pay = new TableColumn("stock");
+        TableColumn catalogNo = new TableColumn("catalogNo");
+        TableColumn symbol = new TableColumn("symbol");
+        TableColumn priceNet = new TableColumn("priceNet");
+        TableColumn stock = new TableColumn("stock");
 
-        table.getColumns().addAll(id, upload, position, employer, pay);
+        table.getColumns().addAll(id, catalogNo, symbol, priceNet, stock);
 
-        List<ProductCatalog> productCatalogs = ProductCatalogDAO.displayAllItems();
-        System.out.println(productCatalogs);
-
-
-        // ProductCatalogDAO.find();
-
-
-        final ObservableList<ProductCatalog> data = FXCollections.observableArrayList(
-
-                //new ProductCatalog(2020014, "Developer", 15, 2500, 1),
-                //new ProductCatalog(2020014, "Developer", 15, 2500, 1)
-        );
+        id.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+        catalogNo.prefWidthProperty().bind(table.widthProperty().multiply(0.3));
+        symbol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
+        priceNet.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
+        stock.prefWidthProperty().bind(table.widthProperty().multiply(0.194));
 
         id.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("Id"));
-        upload.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("catalogNo"));
-        position.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("symbol"));
-        employer.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("priceNet"));
-        pay.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("stock"));
+        catalogNo.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("catalogNo"));
+        symbol.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("symbol"));
+        priceNet.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("priceNet"));
+        stock.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("stock"));
 
-        table.setItems(data);
+        id.setResizable(false);
+        catalogNo.setResizable(false);
+        symbol.setResizable(false);
+        priceNet.setResizable(false);
+        stock.setResizable(false);
+
+    }
+
+    public void loadDataToTable(ProductCatalog productCatalog) {
+
+        table.getItems().add(productCatalog);
+
     }
 
 
@@ -523,19 +532,7 @@ public class DashboardController extends Main implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         loadsProductsToCatalogTree();
-/*
-        List<ProductCatalog> products = null;
-        try {
-            products = ReadExcelWithProductCatalog.readFileUsingPOI();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        for (ProductCatalog product : products) {
-            System.out.println(product.toString());
-        }
-        loadDataToTable();
-
- */
+        loadColumnToTable();
     }
 
     public void openExcelFileFromDialog() {
@@ -567,12 +564,17 @@ public class DashboardController extends Main implements Initializable {
         }
 
         int countAffectedProducts = 0;
+        int countExcelProducts = 0;
+        int countNewProducts = 0;
+        int countDBProduducts = 0;
 
         for (ProductCatalog excelProduct : excelProducts) {
+            countExcelProducts++;
 
             boolean isNewProduct = true;
 
             for (ProductCatalog dbProduct : dbProducts) {
+
 
                 if (dbProduct.getPriceNet() != excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
                     isNewProduct = false;
@@ -581,10 +583,12 @@ public class DashboardController extends Main implements Initializable {
 
                 } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet()) {
                     isNewProduct = false;
-                    //do nothing
+                    countDBProduducts++;
                 }
+
             }
             if (isNewProduct) {
+                countNewProducts++;
                 ProductCatalogDAO.insert(excelProduct);
             }
         }
@@ -598,27 +602,26 @@ public class DashboardController extends Main implements Initializable {
                 popup.hide();
             }
         });
-        label.setStyle(" -fx-background-color: grey;");
-        label.setMinWidth(100);
+        label.setStyle(" -fx-background-color: grey; -fx-text-fill: white;");
+        label.setMinWidth(200);
         label.setMinHeight(100);
+        label.setAlignment(Pos.CENTER);
         popup.getContent().addAll(label, hide);
-        popup.show(parent);
+        if (countAffectedProducts > 0) {
+            popup.show(parent);
+        }
 
-        // TODO: Atspausdinti pakeistu produktu skaiciu i nauja dialoga.
-        // TODO: 1. Padaryta
-        // ProductCatalogDAO.insert(excelProduct);
-        // TODO: 2. Padaryta Atenaujinti tik tas produktų kainas, kurios skiriasi nuo xlsx faile esančių kainų, nes pasikeitė
-        // 2.1. Arba vienu kreipimusi į db išsitraukti visą sąrašą produktų (ProductCatalogDAO.displayAllItems())
-        // 2.1. Arba kiekvieną kartą prieš įrašant konkretų produktą, gauti informaciją apie jo
-        //      kainą db (ProductCatalogDAO.findByName(excelProduct.getName()))
-        // if (dbProduct.getPrice() != excelProduct.getPrice()) {
-        //      ProductCatalogDAO.update(excelProduct);
-        // }
-        // TODO: 3. Testavimas- 1) pasižiūrėti ar pasikeitus kainoms, atnaujinami įrašai db.
-        //                      2) pasižiūrėti ar nepasikeitus kainoms, įrašai db neatnaujinami.
-        //System.out.println(product.toString());
+        // TODO: 1. Papildyti produktu lente su foreign key, atnaujinti entity'cius su date.
+        // TODO: 1. Paforkint naujai branch'a
+        // 2. Padaryta (Istrinti tuscia stulpeli)
+        // 3. Padaryta (Kiek isviso buvo nuskaityta excel'i eiluciu)
+        // 4. Padaryta ( Kiek buvo rasta nauju irasu (i duombaze neitrauktu irasu))
+        // 5. Padaryta (Nepakeisti irasai esantis duombazeje)
+        //      6. Sutvarkyti baltas sriftas viduryje ok button'as Sarunas
+        // 7. Itraukti i stulpeliu lentele nr column
+        //      8. Pasiziuret scale'inima (pagalvot apie didzio atrakinima) Dovydas
+        //      9. Paieska medyje Mantas
 
-        //     loadDataToTable();
 
     }
 
@@ -631,6 +634,28 @@ public class DashboardController extends Main implements Initializable {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Excel file", "*.xlsx")
         );
+    }
+
+    public void selectItem(MouseEvent event) {
+        TreeItem<String> item = product_catalog_tree.getSelectionModel().getSelectedItem();
+        List<Categories> categories = CategoriesDAO.selectCategory(namer(item.getValue()));
+        List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
+        table.getItems().clear();
+        for (Categories category : categories) {
+            for (ProductCatalog product : products) {
+                if (category.getId() == product.getGroupId()) {
+                    loadDataToTable(product);
+                }
+            }
+        }
+
+    }
+
+    public String namer(String name) {
+        if (name.equals("Visa klasifikacija")) {
+            name = "Home";
+        }
+        return name;
     }
 
 }

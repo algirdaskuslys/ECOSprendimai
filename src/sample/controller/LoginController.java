@@ -58,11 +58,11 @@ public class LoginController {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(Constants.DASHBOARD_VIEW_DIRECTORY_PATH));
             Stage dashboardStage = new Stage();
-            Scene scene = new Scene(root, Constants.DASHBOARD_WINDOW_WIDTH, Constants.DASHBOARD_WINDOW_HEIGHT);
+            Scene scene = new Scene(root);
             //scene.getStylesheets().add(getClass().getResource(Constants.CSS_DIRECTORY_PATH).toExternalForm());
             dashboardStage.setTitle("Produktų peržiūros langas");
             dashboardStage.setScene(scene);
-            //dashboardStage.setMaximized(true);
+            dashboardStage.setMinWidth(1345);
             dashboardStage.show();
             windowCloseLoginButton();
 
