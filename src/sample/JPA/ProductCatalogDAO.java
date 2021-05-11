@@ -64,4 +64,30 @@ public static List<ProductCatalog> displayAllItems(){
 
     }
 
+    public static List<ProductCatalog> searchByTreeItemName(String treeItemSearchName) {
+        treeItemSearchName = "%" + treeItemSearchName + "%";
+        System.out.println(treeItemSearchName);
+
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        TypedQuery<Categories> query = entityManager.createQuery("SELECT e FROM Categories e WHERE e.name LIKE ?1", Categories.class);
+        List<Categories> category = query.setParameter(1, treeItemSearchName).getResultList();
+
+        List<ProductCatalog> downloadedProductCatalog = ProductCatalogDAO.displayAllItems();
+
+        List<ProductCatalog> iteratedProductCatalog = new ArrayList<>();
+
+        for (Categories category2 : category) {
+            for (ProductCatalog product : downloadedProductCatalog) {
+                if (product.getGroupId() == category2.getId()) {
+                    iteratedProductCatalog.add(product);
+                }
+            }
+        }
+
+        entityManager.close();
+
+
+        return iteratedProductCatalog;
+    }
+
 }

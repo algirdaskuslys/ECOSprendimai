@@ -7,29 +7,20 @@
 <AnchorPane minWidth="1342.0" prefHeight="534.0" prefWidth="1342.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
     <children>
         <Button fx:id="close_button" layoutX="1305.0" layoutY="13.0" mnemonicParsing="false" onAction="#goBackToLogin" style="-fx-background-color: #f5d787;" text="X" AnchorPane.rightAnchor="13.0" />
-        <TableView fx:id="table" layoutX="389.0" layoutY="56.0" prefHeight="356.0" prefWidth="537.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="416.0" AnchorPane.topAnchor="56.0">
+        <TableView fx:id="table" layoutX="389.0" layoutY="56.0" prefHeight="356.0" prefWidth="537.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="416.0" AnchorPane.topAnchor="56.0">
             <columns>
-
             </columns>
         </TableView>
-        <TabPane layoutX="33.0" layoutY="56.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
-            <Tab fx:id="tab1" text="Klasifikacija1">
-                <TreeView fx:id="product_catalog_tree" layoutX="100.0" layoutY="62.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="327.0" prefWidth="384.0" />
-            </Tab>
-            <padding>
-                <Insets left="3.0" />
-            </padding>
-        </TabPane>
-        <Button layoutX="332.0" layoutY="16.0" mnemonicParsing="false" text="Filtruoti" AnchorPane.topAnchor="16.0" />
-        <Button layoutX="270.0" layoutY="16.0" mnemonicParsing="false" text="Ieškoti" AnchorPane.topAnchor="16.0" />
-        <TextField layoutX="85.0" layoutY="16.0" prefHeight="25.0" prefWidth="172.0" AnchorPane.topAnchor="16.0" />
+          <TreeView fx:id="product_catalog_tree" layoutX="3.0" layoutY="56.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="478.0" prefWidth="384.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0" />
+        <Button fx:id="filtruotiButton" layoutX="332.0" layoutY="16.0" mnemonicParsing="false" onAction="#filterButtonOnAction" text="Filtruoti" AnchorPane.topAnchor="16.0" />
+        <Button layoutX="270.0" layoutY="16.0" mnemonicParsing="false" onAction="#filterButtonOnAction" text="Ieškoti" AnchorPane.topAnchor="16.0" />
+        <TextField id="paieskosLaukelis" fx:id="paieskosLaukelis" layoutX="85.0" layoutY="16.0" prefHeight="25.0" prefWidth="172.0" AnchorPane.topAnchor="16.0" />
         <Label layoutX="33.0" layoutY="20.0" text="Ieškoti :" AnchorPane.topAnchor="20.0" />
         <TitledPane animated="false" layoutX="929.0" layoutY="56.0" prefHeight="356.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="403.0">
                     <children>
                         <Label layoutX="21.0" layoutY="14.0" prefHeight="17.0" prefWidth="77.0" text="Kat. numeris :" />
-                        <Button fx:id="open_file" layoutX="228.0" layoutY="10.0" mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Atnaujinti kainas..." />
                         <Label layoutX="114.0" layoutY="14.0" prefHeight="17.0" prefWidth="90.0" style="-fx-font-weight: bold;" text="0" />
                         <Label layoutX="21.0" layoutY="85.0" prefHeight="17.0" prefWidth="94.0" text="Kaina :" />
                         <Label layoutX="21.0" layoutY="123.0" prefHeight="17.0" prefWidth="109.0" text="Kaina su nuolaida :" />
@@ -61,8 +52,9 @@
                 <Insets right="3.0" />
             </padding>
         </TitledPane>
-        <Label layoutX="1170.0" layoutY="17.0" text="Vartotojas :" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="17.0" />
-        <Label layoutX="1239.0" layoutY="17.0" prefHeight="17.0" prefWidth="66.0" style="-fx-font-weight: bold;" text="Julius" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="17.0" />
-
+        <Label layoutX="1170.0" layoutY="24.0" text="Vartotojas :" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="24.0" />
+        <Label layoutX="1239.0" layoutY="24.0" prefHeight="17.0" prefWidth="66.0" style="-fx-font-weight: bold;" text="Julius" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="24.0" />
+        <Label fx:id="countAll" alignment="CENTER_RIGHT" layoutX="389.0" layoutY="519.0" prefHeight="17.0" prefWidth="537.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="416.0" />
+        <Button fx:id="open_file" focusTraversable="false" graphicTextGap="0.0" layoutX="927.0" layoutY="16.0" mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Atnaujinti kainas..." AnchorPane.rightAnchor="303.0" AnchorPane.topAnchor="16.0" />
     </children>
 </AnchorPane>
