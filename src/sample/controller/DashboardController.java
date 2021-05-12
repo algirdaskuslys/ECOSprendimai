@@ -1,5 +1,7 @@
 package sample.controller;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,14 +15,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import javafx.stage.Window;
+import javafx.util.Callback;
 import org.apache.poi.hssf.util.HSSFColor;
 import sample.JPA.*;
 import sample.Main;
@@ -42,6 +47,9 @@ public class DashboardController extends Main implements Initializable {
     @FXML
     private TableView table;
     public Button open_file;
+    public TextField paieskosLaukelis;
+    public Label countAll;
+
 
     public void goBackToLogin(ActionEvent actionEvent) {
         try {
@@ -493,26 +501,51 @@ public class DashboardController extends Main implements Initializable {
 
     public void loadColumnToTable() {
 
+        TableColumn number = new TableColumn("No.");
         TableColumn id = new TableColumn("Id");
         TableColumn catalogNo = new TableColumn("catalogNo");
         TableColumn symbol = new TableColumn("symbol");
         TableColumn priceNet = new TableColumn("priceNet");
         TableColumn stock = new TableColumn("stock");
 
-        table.getColumns().addAll(id, catalogNo, symbol, priceNet, stock);
+        table.getColumns().addAll(number, id, catalogNo, symbol, priceNet, stock);
 
+        number.prefWidthProperty().bind(table.widthProperty().multiply(0.07));
         id.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
-        catalogNo.prefWidthProperty().bind(table.widthProperty().multiply(0.3));
+        catalogNo.prefWidthProperty().bind(table.widthProperty().multiply(0.23));
         symbol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
         priceNet.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
         stock.prefWidthProperty().bind(table.widthProperty().multiply(0.194));
 
+        number.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog>, ObservableValue<ProductCatalog>>() {
+            @Override public ObservableValue<ProductCatalog> call(TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog> p) {
+                return new ReadOnlyObjectWrapper(p.getValue());
+            }
+        });
+
+        number.setCellFactory(new Callback<TableColumn<ProductCatalog, ProductCatalog>, TableCell<ProductCatalog, ProductCatalog>>() {
+            @Override public TableCell<ProductCatalog, ProductCatalog> call(TableColumn<ProductCatalog, ProductCatalog> param) {
+                return new TableCell<ProductCatalog, ProductCatalog>() {
+                    @Override protected void updateItem(ProductCatalog item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (this.getTableRow() != null && item != null) {
+                            setText(this.getTableRow().getIndex()+1+"");
+                        } else {
+                            setText("");
+                        }
+                    }
+                };
+            }
+        });
+        number.setSortable(false);
         id.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("Id"));
         catalogNo.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("catalogNo"));
         symbol.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("symbol"));
         priceNet.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("priceNet"));
         stock.setCellValueFactory(new PropertyValueFactory<ProductCatalog, String>("stock"));
 
+        number.setResizable(false);
         id.setResizable(false);
         catalogNo.setResizable(false);
         symbol.setResizable(false);
@@ -523,7 +556,7 @@ public class DashboardController extends Main implements Initializable {
 
     public void loadDataToTable(ProductCatalog productCatalog) {
 
-        table.getItems().add(productCatalog);
+        table.getItems().add( productCatalog);
 
     }
 
@@ -593,7 +626,10 @@ public class DashboardController extends Main implements Initializable {
             }
         }
 
-        Label label = new Label("Pakeite tiek prekiu :" + " " + countAffectedProducts);
+        Label label = new Label("Pakeista produktų :" + " " + countAffectedProducts + "\n" +
+                    "Excel'yje yra produktų : " + countExcelProducts +"\n" +
+                    "Pridėta naujų produktų : " + countNewProducts + "\n" +
+                    "Duombazėje nepakeistų produktų : " + countDBProduducts);
         final Popup popup = new Popup();
         Button hide = new Button("Ok");
         hide.setOnAction(new EventHandler<ActionEvent>() {
@@ -601,26 +637,19 @@ public class DashboardController extends Main implements Initializable {
             public void handle(ActionEvent event) {
                 popup.hide();
             }
-        });
+        });hide.setLayoutX(140);
+        hide.setLayoutY(115);
         label.setStyle(" -fx-background-color: grey; -fx-text-fill: white;");
-        label.setMinWidth(200);
-        label.setMinHeight(100);
+        label.setMinWidth(300);
+        label.setMinHeight(150);
         label.setAlignment(Pos.CENTER);
         popup.getContent().addAll(label, hide);
         if (countAffectedProducts > 0) {
             popup.show(parent);
         }
 
-        // TODO: 1. Papildyti produktu lente su foreign key, atnaujinti entity'cius su date.
-        // TODO: 1. Paforkint naujai branch'a
-        // 2. Padaryta (Istrinti tuscia stulpeli)
-        // 3. Padaryta (Kiek isviso buvo nuskaityta excel'i eiluciu)
-        // 4. Padaryta ( Kiek buvo rasta nauju irasu (i duombaze neitrauktu irasu))
-        // 5. Padaryta (Nepakeisti irasai esantis duombazeje)
-        //      6. Sutvarkyti baltas sriftas viduryje ok button'as Sarunas
-        // 7. Itraukti i stulpeliu lentele nr column
-        //      8. Pasiziuret scale'inima (pagalvot apie didzio atrakinima) Dovydas
-        //      9. Paieska medyje Mantas
+        // TODO:
+        //  3. Sutvarkyti filtravima. Mantas
 
 
     }
@@ -640,14 +669,17 @@ public class DashboardController extends Main implements Initializable {
         TreeItem<String> item = product_catalog_tree.getSelectionModel().getSelectedItem();
         List<Categories> categories = CategoriesDAO.selectCategory(namer(item.getValue()));
         List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
+        int number = 0;
         table.getItems().clear();
         for (Categories category : categories) {
             for (ProductCatalog product : products) {
                 if (category.getId() == product.getGroupId()) {
-                    loadDataToTable(product);
+                    number++;
+                    loadDataToTable( product);
                 }
             }
         }
+        countAll.setText("Išviso įrašų : " + number);
 
     }
 
@@ -657,6 +689,16 @@ public class DashboardController extends Main implements Initializable {
         }
         return name;
     }
+
+    public void filterButtonOnAction(ActionEvent actionEvent) {
+        List<ProductCatalog> products = ProductCatalogDAO.searchByTreeItemName(paieskosLaukelis.getText());
+        table.getItems().clear();
+        for (ProductCatalog product : products) {
+            loadDataToTable(product);
+        }
+    }
+
+
 
 }
 
