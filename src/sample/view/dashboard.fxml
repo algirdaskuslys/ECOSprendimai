@@ -7,16 +7,15 @@
 <AnchorPane minWidth="1342.0" prefHeight="534.0" prefWidth="1342.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
     <children>
         <Button fx:id="close_button" layoutX="1305.0" layoutY="13.0" mnemonicParsing="false" onAction="#goBackToLogin" style="-fx-background-color: #f5d787;" text="X" AnchorPane.rightAnchor="13.0" />
-        <TableView fx:id="table" layoutX="389.0" layoutY="56.0" prefHeight="356.0" prefWidth="537.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="416.0" AnchorPane.topAnchor="56.0">
+        <TableView fx:id="table" layoutX="387.0" layoutY="56.0" prefHeight="463.0" prefWidth="537.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="56.0">
             <columns>
             </columns>
         </TableView>
-          <TreeView fx:id="product_catalog_tree" layoutX="3.0" layoutY="56.0" onContextMenuRequested="#selectItem" onMouseClicked="#selectItem" prefHeight="478.0" prefWidth="384.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0" />
-        <Button fx:id="filtruotiButton" layoutX="332.0" layoutY="16.0" mnemonicParsing="false" onAction="#filterButtonOnAction" text="Filtruoti" AnchorPane.topAnchor="16.0" />
-        <Button layoutX="270.0" layoutY="16.0" mnemonicParsing="false" onAction="#filterButtonOnAction" text="Ieškoti" AnchorPane.topAnchor="16.0" />
-        <TextField id="paieskosLaukelis" fx:id="paieskosLaukelis" layoutX="85.0" layoutY="16.0" prefHeight="25.0" prefWidth="172.0" AnchorPane.topAnchor="16.0" />
-        <Label layoutX="33.0" layoutY="20.0" text="Ieškoti :" AnchorPane.topAnchor="20.0" />
-        <TitledPane animated="false" layoutX="929.0" layoutY="56.0" prefHeight="356.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+        <Button fx:id="filtruotiButton" layoutX="326.0" layoutY="16.0" mnemonicParsing="false" onAction="#filterButtonOnAction" text="Filtruoti" AnchorPane.topAnchor="16.0" />
+        <TextField id="paieskosLaukelis" fx:id="paieskosLaukelis" layoutX="61.0" layoutY="16.0" prefHeight="25.0" prefWidth="258.0" AnchorPane.topAnchor="16.0" />
+        <Label layoutX="14.0" layoutY="20.0" text="Filtruoti: " AnchorPane.topAnchor="20.0" />
+      <TitledPane fx:id="leftTitledPane" animated="false" collapsible="false" layoutX="3.0" layoutY="56.0" prefHeight="380.0" prefWidth="380.0" text="Prekių kategorijų medis" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0" />
+        <TitledPane animated="false" collapsible="false" layoutX="929.0" layoutY="56.0" prefHeight="356.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="403.0">
                     <children>
@@ -46,6 +45,9 @@
                         <Label layoutX="22.0" layoutY="169.0" prefHeight="17.0" prefWidth="85.0" text="Paketas :" />
                         <Button layoutX="230.0" layoutY="108.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" text="?" />
                     </children>
+               <padding>
+                  <Insets bottom="3.0" />
+               </padding>
                 </AnchorPane>
             </content>
             <padding>
