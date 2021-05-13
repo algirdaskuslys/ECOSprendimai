@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,12 +44,12 @@ import org.eclipse.fx.ui.controls.tree.TreeItemPredicate;
 public class DashboardController extends Main implements Initializable {
 
     public Button close_button;
-    public TreeView<String> product_catalog_tree;
     @FXML
     private TableView table;
     public Button open_file;
     public TextField paieskosLaukelis;
     public Label countAll;
+
 
 
     public void goBackToLogin(ActionEvent actionEvent) {
@@ -73,429 +74,428 @@ public class DashboardController extends Main implements Initializable {
         stage.close();
     }
 
-    public void loadsProductsToCatalogTree() {
+    public FilterableTreeItem<CategoryItem> loadsProductsToCatalogTree() {
 
 
-        TreeItem<String> root = new TreeItem<>("Visa klasifikacija");
+        FilterableTreeItem<CategoryItem> root = new FilterableTreeItem<>(new CategoryItem("Root"));
         root.setExpanded(true);
 
+        FilterableTreeItem<CategoryItem> skydai = createFolder("Skydai");
+        FilterableTreeItem<CategoryItem> apsvietimas = createFolder("Apšvietimas");
+        FilterableTreeItem<CategoryItem> kabeliai = createFolder("Kabeliai");
+        FilterableTreeItem<CategoryItem> vamzdziaiIrGofra = createFolder("Vamzdžiai Ir Gofra");
+        FilterableTreeItem<CategoryItem> instaliacinesPrekes = createFolder("Instaliacinės prekės");
+        FilterableTreeItem<CategoryItem> metalinesKonstrukcijos = createFolder("Metalinės konstrukcijos");
+        FilterableTreeItem<CategoryItem> izeminimasIrZaibosauga = createFolder("Įžeminimas ir žaibosauga");
+        FilterableTreeItem<CategoryItem> elektromechanika = createFolder("Elektromechanika");
 
-        TreeItem<String> skydai = new TreeItem<>("Skydai");
-        TreeItem<String> apsvietimas = new TreeItem<>("Apšvietimas");
-        TreeItem<String> kabeliai = new TreeItem<>("Kabeliai");
-        TreeItem<String> vamzdziaiIrGofra = new TreeItem<>("Vamzdžiai Ir Gofra");
-        TreeItem<String> instaliacinesPrekes = new TreeItem<>("Instaliacinės prekės");
-        TreeItem<String> metalinesKonstrukcijos = new TreeItem<>("Metalinės konstrukcijos");
-        TreeItem<String> izeminimasIrZaibosauga = new TreeItem<>("Įžeminimas ir žaibosauga");
-        TreeItem<String> elektromechanika = new TreeItem<>("Elektromechanika");
+        root.getInternalChildren().add(skydai);
+        root.getInternalChildren().add(apsvietimas);
+        root.getInternalChildren().add(kabeliai);
+        root.getInternalChildren().add(vamzdziaiIrGofra);
+        root.getInternalChildren().add(instaliacinesPrekes);
+        root.getInternalChildren().add(metalinesKonstrukcijos);
+        root.getInternalChildren().add(izeminimasIrZaibosauga);
+        root.getInternalChildren().add(elektromechanika);
 
-        root.getChildren().add(skydai);
-        root.getChildren().add(apsvietimas);
-        root.getChildren().add(kabeliai);
-        root.getChildren().add(vamzdziaiIrGofra);
-        root.getChildren().add(instaliacinesPrekes);
-        root.getChildren().add(metalinesKonstrukcijos);
-        root.getChildren().add(izeminimasIrZaibosauga);
-        root.getChildren().add(elektromechanika);
         //Skydai
-        TreeItem<String> laukoSkydai = new TreeItem<>("Lauko skydai");
-        TreeItem<String> vidausSkydai = new TreeItem<>("Vidaus skydai");
+        FilterableTreeItem<CategoryItem> laukoSkydai = createFolder("Lauko skydai");
+        FilterableTreeItem<CategoryItem> vidausSkydai = createFolder("Vidaus skydai");
 
         //Apšvietimas
-        TreeItem<String> laukoApsvietimas = new TreeItem<>("Lauko apšvietimas");
-        TreeItem<String> vidausApsvietimas = new TreeItem<>("Vidaus apšvietimas");
+        FilterableTreeItem<CategoryItem> laukoApsvietimas = createFolder("Lauko apšvietimas");
+        FilterableTreeItem<CategoryItem> vidausApsvietimas = createFolder("Vidaus apšvietimas");
 
         //Kabeliai
-        TreeItem<String> instaliaciniaiKabeliai = new TreeItem<>("Instaliaciniai kabeliai");
-        TreeItem<String> jegosKabeliai = new TreeItem<>("Jėgos kabeliai");
-        TreeItem<String> behalogeniniaiKabeliai = new TreeItem<>("Behalogeniniai kabeliai");
-        TreeItem<String> kontroliniaiKabeliai = new TreeItem<>("Kontroliniai kabeliai");
-        TreeItem<String> laidai = new TreeItem<>("Laidai");
-        TreeItem<String> internetiniaiKabeliai = new TreeItem<>("Internetinai kabeliai");
+        FilterableTreeItem<CategoryItem> instaliaciniaiKabeliai = createFolder("Instaliaciniai kabeliai");
+        FilterableTreeItem<CategoryItem> jegosKabeliai = createFolder("Jėgos kabeliai");
+        FilterableTreeItem<CategoryItem> behalogeniniaiKabeliai = createFolder("Behalogeniniai kabeliai");
+        FilterableTreeItem<CategoryItem> kontroliniaiKabeliai = createFolder("Kontroliniai kabeliai");
+        FilterableTreeItem<CategoryItem> laidai = createFolder("Laidai");
+        FilterableTreeItem<CategoryItem> internetiniaiKabeliai = createFolder("Internetinai kabeliai");
 
         //Vamzdžiai ir gofra
-        TreeItem<String> lauko = new TreeItem<>("Lauko");
-        TreeItem<String> vidaus = new TreeItem<>("Vidaus");
+        FilterableTreeItem<CategoryItem> lauko = createFolder("Lauko");
+        FilterableTreeItem<CategoryItem> vidaus = createFolder("Vidaus");
 
         //Instaliacinės prekės
-        TreeItem<String> jungikliaiIrKistukiniaiLizdai = new TreeItem<>("Jungikliai ir kištukiniai lizdai");
-        TreeItem<String> potinkinesDezutes = new TreeItem<>("Potinkinės dėžutės");
-        TreeItem<String> sildymoElementai = new TreeItem<>("Šildymo elementai");
-        TreeItem<String> judesioIrBuvioJutikliai = new TreeItem<>("Judesio ir būvio jutikliai");
-        TreeItem<String> virstinkinesInstaliacinėsDezutes = new TreeItem<>("Virštinkinės instaliacinės dėžutės");
-        TreeItem<String> grindinesDezutes = new TreeItem<>("Grindinės dėžutės");
-        TreeItem<String> modulineSistema = new TreeItem<>("Modulinė 45x45 sistema");
+        FilterableTreeItem<CategoryItem> jungikliaiIrKistukiniaiLizdai = createFolder("Jungikliai ir kištukiniai lizdai");
+        FilterableTreeItem<CategoryItem> potinkinesDezutes = createFolder("Potinkinės dėžutės");
+        FilterableTreeItem<CategoryItem> sildymoElementai = createFolder("Šildymo elementai");
+        FilterableTreeItem<CategoryItem> judesioIrBuvioJutikliai = createFolder("Judesio ir būvio jutikliai");
+        FilterableTreeItem<CategoryItem> virstinkinesInstaliacinėsDezutes = createFolder("Virštinkinės instaliacinės dėžutės");
+        FilterableTreeItem<CategoryItem> grindinesDezutes = createFolder("Grindinės dėžutės");
+        FilterableTreeItem<CategoryItem> modulineSistema = createFolder("Modulinė 45x45 sistema");
 
 
         //metalines Konstrukcijos
-        TreeItem<String> kopecios = new TreeItem<>("Kopėčios");
-        TreeItem<String> loveliai = new TreeItem<>("Loveliai");
-        TreeItem<String> apsvietimoLovelis = new TreeItem<>("Apšvietimo lovelis");
+        FilterableTreeItem<CategoryItem> kopecios = createFolder("Kopėčios");
+        FilterableTreeItem<CategoryItem> loveliai = createFolder("Loveliai");
+        FilterableTreeItem<CategoryItem> apsvietimoLovelis = createFolder("Apšvietimo lovelis");
 
 
         //Įžeminimas ir žaibosauga
-        TreeItem<String> izeminimoStrypai = new TreeItem<>("Įžeminimo strypai");
-        TreeItem<String> cinkuotaJuosta = new TreeItem<>("Cinkuota juosta");
-        TreeItem<String> cinkuotaViela = new TreeItem<>("Cinkuota viela");
-        TreeItem<String> jungtys = new TreeItem<>("Jungtys");
-        TreeItem<String> laikikliai = new TreeItem<>("Laikikliai");
-        TreeItem<String> aktyviZaibosauga = new TreeItem<>("Aktyvi žaibosauga");
-        TreeItem<String> pasyviZaibosauga = new TreeItem<>("Pasyvi žaibosauga");
-        TreeItem<String> virsItampioRibotuvai = new TreeItem<>("Virš įtampio ribotuvai");
-        TreeItem<String> priedai = new TreeItem<>("Priedai");
+        FilterableTreeItem<CategoryItem> izeminimoStrypai = createFolder("Įžeminimo strypai");
+        FilterableTreeItem<CategoryItem> cinkuotaJuosta = createFolder("Cinkuota juosta");
+        FilterableTreeItem<CategoryItem> cinkuotaViela = createFolder("Cinkuota viela");
+        FilterableTreeItem<CategoryItem> jungtys = createFolder("Jungtys");
+        FilterableTreeItem<CategoryItem> laikikliai = createFolder("Laikikliai");
+        FilterableTreeItem<CategoryItem> aktyviZaibosauga = createFolder("Aktyvi žaibosauga");
+        FilterableTreeItem<CategoryItem> pasyviZaibosauga = createFolder("Pasyvi žaibosauga");
+        FilterableTreeItem<CategoryItem> virsItampioRibotuvai = createFolder("Virš įtampio ribotuvai");
+        FilterableTreeItem<CategoryItem> priedai = createFolder("Priedai");
 
         //Elektromechanika
-        TreeItem<String> automatiniaiJungikliai = new TreeItem<>("Automatiniai jungikliai");
-        TreeItem<String> relės = new TreeItem<>("Relės");
-        TreeItem<String> kontaktoriai = new TreeItem<>("Kontaktoriai");
-        TreeItem<String> kirtikliai = new TreeItem<>("Kirtikliai");
-        TreeItem<String> moduliniaiJungikliai = new TreeItem<>("Moduliniai jungikliai");
-        TreeItem<String> saugikliai = new TreeItem<>("Saugikliai");
+        FilterableTreeItem<CategoryItem> automatiniaiJungikliai = createFolder("Automatiniai jungikliai");
+        FilterableTreeItem<CategoryItem> relės = createFolder("Relės");
+        FilterableTreeItem<CategoryItem> kontaktoriai = createFolder("Kontaktoriai");
+        FilterableTreeItem<CategoryItem> kirtikliai = createFolder("Kirtikliai");
+        FilterableTreeItem<CategoryItem> moduliniaiJungikliai = createFolder("Moduliniai jungikliai");
+        FilterableTreeItem<CategoryItem> saugikliai = createFolder("Saugikliai");
 
         //Skydai add
-        skydai.getChildren().add(laukoSkydai);
-        skydai.getChildren().add(vidausSkydai);
+        skydai.getInternalChildren().add(laukoSkydai);
+        skydai.getInternalChildren().add(vidausSkydai);
 
         //Apsvietimas add
-        apsvietimas.getChildren().add(laukoApsvietimas);
-        apsvietimas.getChildren().add(vidausApsvietimas);
+        apsvietimas.getInternalChildren().add(laukoApsvietimas);
+        apsvietimas.getInternalChildren().add(vidausApsvietimas);
 
         //Kabeliai add
-        kabeliai.getChildren().add(instaliaciniaiKabeliai);
-        kabeliai.getChildren().add(jegosKabeliai);
-        kabeliai.getChildren().add(behalogeniniaiKabeliai);
-        kabeliai.getChildren().add(kontroliniaiKabeliai);
-        kabeliai.getChildren().add(laidai);
-        kabeliai.getChildren().add(internetiniaiKabeliai);
+        kabeliai.getInternalChildren().add(instaliaciniaiKabeliai);
+        kabeliai.getInternalChildren().add(jegosKabeliai);
+        kabeliai.getInternalChildren().add(behalogeniniaiKabeliai);
+        kabeliai.getInternalChildren().add(kontroliniaiKabeliai);
+        kabeliai.getInternalChildren().add(laidai);
+        kabeliai.getInternalChildren().add(internetiniaiKabeliai);
 
         //VamzdziaiIrGofra add
-        vamzdziaiIrGofra.getChildren().add(lauko);
-        vamzdziaiIrGofra.getChildren().add(vidaus);
+        vamzdziaiIrGofra.getInternalChildren().add(lauko);
+        vamzdziaiIrGofra.getInternalChildren().add(vidaus);
 
         //Instaliacinės prekės add
-        instaliacinesPrekes.getChildren().add(jungikliaiIrKistukiniaiLizdai);
-        instaliacinesPrekes.getChildren().add(potinkinesDezutes);
-        instaliacinesPrekes.getChildren().add(sildymoElementai);
-        instaliacinesPrekes.getChildren().add(judesioIrBuvioJutikliai);
-        instaliacinesPrekes.getChildren().add(virstinkinesInstaliacinėsDezutes);
-        instaliacinesPrekes.getChildren().add(grindinesDezutes);
-        instaliacinesPrekes.getChildren().add(modulineSistema);
+        instaliacinesPrekes.getInternalChildren().add(jungikliaiIrKistukiniaiLizdai);
+        instaliacinesPrekes.getInternalChildren().add(potinkinesDezutes);
+        instaliacinesPrekes.getInternalChildren().add(sildymoElementai);
+        instaliacinesPrekes.getInternalChildren().add(judesioIrBuvioJutikliai);
+        instaliacinesPrekes.getInternalChildren().add(virstinkinesInstaliacinėsDezutes);
+        instaliacinesPrekes.getInternalChildren().add(grindinesDezutes);
+        instaliacinesPrekes.getInternalChildren().add(modulineSistema);
 
         //Metalinės konstrukcijos add
-        metalinesKonstrukcijos.getChildren().add(kopecios);
-        metalinesKonstrukcijos.getChildren().add(loveliai);
-        metalinesKonstrukcijos.getChildren().add(apsvietimoLovelis);
+        metalinesKonstrukcijos.getInternalChildren().add(kopecios);
+        metalinesKonstrukcijos.getInternalChildren().add(loveliai);
+        metalinesKonstrukcijos.getInternalChildren().add(apsvietimoLovelis);
 
         //Įžeminimas ir žaibosauga add
-        izeminimasIrZaibosauga.getChildren().add(izeminimoStrypai);
-        izeminimasIrZaibosauga.getChildren().add(cinkuotaJuosta);
-        izeminimasIrZaibosauga.getChildren().add(cinkuotaViela);
-        izeminimasIrZaibosauga.getChildren().add(jungtys);
-        izeminimasIrZaibosauga.getChildren().add(laikikliai);
-        izeminimasIrZaibosauga.getChildren().add(aktyviZaibosauga);
-        izeminimasIrZaibosauga.getChildren().add(pasyviZaibosauga);
-        izeminimasIrZaibosauga.getChildren().add(virsItampioRibotuvai);
-        izeminimasIrZaibosauga.getChildren().add(priedai);
+        izeminimasIrZaibosauga.getInternalChildren().add(izeminimoStrypai);
+        izeminimasIrZaibosauga.getInternalChildren().add(cinkuotaJuosta);
+        izeminimasIrZaibosauga.getInternalChildren().add(cinkuotaViela);
+        izeminimasIrZaibosauga.getInternalChildren().add(jungtys);
+        izeminimasIrZaibosauga.getInternalChildren().add(laikikliai);
+        izeminimasIrZaibosauga.getInternalChildren().add(aktyviZaibosauga);
+        izeminimasIrZaibosauga.getInternalChildren().add(pasyviZaibosauga);
+        izeminimasIrZaibosauga.getInternalChildren().add(virsItampioRibotuvai);
+        izeminimasIrZaibosauga.getInternalChildren().add(priedai);
 
         //Elektromechanika add
-        elektromechanika.getChildren().add(automatiniaiJungikliai);
-        elektromechanika.getChildren().add(relės);
-        elektromechanika.getChildren().add(kontaktoriai);
-        elektromechanika.getChildren().add(kirtikliai);
-        elektromechanika.getChildren().add(moduliniaiJungikliai);
-        elektromechanika.getChildren().add(saugikliai);
+        elektromechanika.getInternalChildren().add(automatiniaiJungikliai);
+        elektromechanika.getInternalChildren().add(relės);
+        elektromechanika.getInternalChildren().add(kontaktoriai);
+        elektromechanika.getInternalChildren().add(kirtikliai);
+        elektromechanika.getInternalChildren().add(moduliniaiJungikliai);
+        elektromechanika.getInternalChildren().add(saugikliai);
 
         //Skydai - Vidaus skydai
-        TreeItem<String> metalinesDezes = new TreeItem<>("Metalinės dėžės");
-        TreeItem<String> potinkiniaiSkydeliai = new TreeItem<>("Potinkiniai skydeliai");
-        TreeItem<String> virstinkiniaiSkydeliai = new TreeItem<>("Virštinkiniai skydeliai");
-        TreeItem<String> remontiniaiSkydeliai = new TreeItem<>("Remontiniai skydeliai");
+        FilterableTreeItem<CategoryItem> metalinesDezes = createFolder("Metalinės dėžės");
+        FilterableTreeItem<CategoryItem> potinkiniaiSkydeliai = createFolder("Potinkiniai skydeliai");
+        FilterableTreeItem<CategoryItem> virstinkiniaiSkydeliai = createFolder("Virštinkiniai skydeliai");
+        FilterableTreeItem<CategoryItem> remontiniaiSkydeliai = createFolder("Remontiniai skydeliai");
 
         //Skydai - Vid add
-        vidausSkydai.getChildren().add(metalinesDezes);
-        vidausSkydai.getChildren().add(potinkiniaiSkydeliai);
-        vidausSkydai.getChildren().add(virstinkiniaiSkydeliai);
-        vidausSkydai.getChildren().add(remontiniaiSkydeliai);
+        vidausSkydai.getInternalChildren().add(metalinesDezes);
+        vidausSkydai.getInternalChildren().add(potinkiniaiSkydeliai);
+        vidausSkydai.getInternalChildren().add(virstinkiniaiSkydeliai);
+        vidausSkydai.getInternalChildren().add(remontiniaiSkydeliai);
 
         //Skydai - potinkiniaiSkydeliai
-        TreeItem<String> potinkiniaiMetaliniaiSkydeliai = new TreeItem<>("Metaliniai");
-        TreeItem<String> potinkiniaiPlastikiniaiSkydeliai = new TreeItem<>("Plastikiniai");
+        FilterableTreeItem<CategoryItem> potinkiniaiMetaliniaiSkydeliai = createFolder("Metaliniai");
+        FilterableTreeItem<CategoryItem> potinkiniaiPlastikiniaiSkydeliai = createFolder("Plastikiniai");
 
 
         //Skydai - virstinkiniaiSkydeliai
-        TreeItem<String> virstinkiniaiMetaliniaiSkydeliai = new TreeItem<>("Metaliniai");
-        TreeItem<String> virstinkiniaiPlastikiniaiSkydeliai = new TreeItem<>("Plastikiniai");
+        FilterableTreeItem<CategoryItem> virstinkiniaiMetaliniaiSkydeliai = createFolder("Metaliniai");
+        FilterableTreeItem<CategoryItem> virstinkiniaiPlastikiniaiSkydeliai = createFolder("Plastikiniai");
 
         //Skydai - potinkiniaiSkydeliai add
-        potinkiniaiSkydeliai.getChildren().add(potinkiniaiMetaliniaiSkydeliai);
-        potinkiniaiSkydeliai.getChildren().add(potinkiniaiPlastikiniaiSkydeliai);
+        potinkiniaiSkydeliai.getInternalChildren().add(potinkiniaiMetaliniaiSkydeliai);
+        potinkiniaiSkydeliai.getInternalChildren().add(potinkiniaiPlastikiniaiSkydeliai);
 
         //Skydai - virstinkiniaiSkydeliai add
-        virstinkiniaiSkydeliai.getChildren().add(virstinkiniaiMetaliniaiSkydeliai);
-        virstinkiniaiSkydeliai.getChildren().add(virstinkiniaiPlastikiniaiSkydeliai);
+        virstinkiniaiSkydeliai.getInternalChildren().add(virstinkiniaiMetaliniaiSkydeliai);
+        virstinkiniaiSkydeliai.getInternalChildren().add(virstinkiniaiPlastikiniaiSkydeliai);
 
         //Skydai - virstinkiniaiSkydeliai - Plastikiniai
-        TreeItem<String> virstinkiniaiPlastikinioSkydelioIp40 = new TreeItem<>("IP40");
-        TreeItem<String> virstinkiniaiPlastikinioSkydelioIp65 = new TreeItem<>("IP65");
+        FilterableTreeItem<CategoryItem> virstinkiniaiPlastikinioSkydelioIp40 = createFolder("IP40");
+        FilterableTreeItem<CategoryItem> virstinkiniaiPlastikinioSkydelioIp65 = createFolder("IP65");
 
         //Skydai - virstinkiniaiSkydeliai - Plastikiniai add
-        virstinkiniaiPlastikiniaiSkydeliai.getChildren().add(virstinkiniaiPlastikinioSkydelioIp40);
-        virstinkiniaiPlastikiniaiSkydeliai.getChildren().add(virstinkiniaiPlastikinioSkydelioIp65);
+        virstinkiniaiPlastikiniaiSkydeliai.getInternalChildren().add(virstinkiniaiPlastikinioSkydelioIp40);
+        virstinkiniaiPlastikiniaiSkydeliai.getInternalChildren().add(virstinkiniaiPlastikinioSkydelioIp65);
 
         //Apsvietimas - Lauko apsvietimas
-        TreeItem<String> gatviniaiSviestuvai = new TreeItem<>("Gatviniai šviestuvai");
-        TreeItem<String> laukoprozektoriai = new TreeItem<>("Lauko prožektoriai");
-        TreeItem<String> parkiniaisviestuvai = new TreeItem<>("Parkiniai šviestuvaii");
-        TreeItem<String> atramosgembes = new TreeItem<>("Atramos gembės");
-        TreeItem<String> priedailaukoApsvietimui = new TreeItem<>("Priedai lauko apšvietimui");
+        FilterableTreeItem<CategoryItem> gatviniaiSviestuvai = createFolder("Gatviniai šviestuvai");
+        FilterableTreeItem<CategoryItem> laukoprozektoriai = createFolder("Lauko prožektoriai");
+        FilterableTreeItem<CategoryItem> parkiniaisviestuvai = createFolder("Parkiniai šviestuvaii");
+        FilterableTreeItem<CategoryItem> atramosgembes = createFolder("Atramos gembės");
+        FilterableTreeItem<CategoryItem> priedailaukoApsvietimui = createFolder("Priedai lauko apšvietimui");
 
         //Apsvietimas - Vidaus apšvietimas
-        TreeItem<String> LEDPanelesA = new TreeItem<>("LED panelės 60x60");
-        TreeItem<String> LEDPaneles = new TreeItem<>("LED panelės");
-        TreeItem<String> downlight = new TreeItem<>("Downlight");
-        TreeItem<String> lubiniai = new TreeItem<>("Lubiniai IP65");
-        TreeItem<String> sieniniai = new TreeItem<>("Sieniniai");
-        TreeItem<String> pakabinami = new TreeItem<>("Pakabinami");
-        TreeItem<String> avarinisApsvietimas = new TreeItem<>("Avarinis apšvietimas");
-        TreeItem<String> highBay = new TreeItem<>("High Bay");
+        FilterableTreeItem<CategoryItem> LEDPanelesA = createFolder("LED panelės 60x60");
+        FilterableTreeItem<CategoryItem> LEDPaneles = createFolder("LED panelės");
+        FilterableTreeItem<CategoryItem> downlight = createFolder("Downlight");
+        FilterableTreeItem<CategoryItem> lubiniai = createFolder("Lubiniai IP65");
+        FilterableTreeItem<CategoryItem> sieniniai = createFolder("Sieniniai");
+        FilterableTreeItem<CategoryItem> pakabinami = createFolder("Pakabinami");
+        FilterableTreeItem<CategoryItem> avarinisApsvietimas = createFolder("Avarinis apšvietimas");
+        FilterableTreeItem<CategoryItem> highBay = createFolder("High Bay");
 
         //Apsvietimas - Lauko apsvietimas add
-        laukoApsvietimas.getChildren().add(gatviniaiSviestuvai);
-        laukoApsvietimas.getChildren().add(laukoprozektoriai);
-        laukoApsvietimas.getChildren().add(parkiniaisviestuvai);
-        laukoApsvietimas.getChildren().add(atramosgembes);
-        laukoApsvietimas.getChildren().add(priedailaukoApsvietimui);
+        laukoApsvietimas.getInternalChildren().add(gatviniaiSviestuvai);
+        laukoApsvietimas.getInternalChildren().add(laukoprozektoriai);
+        laukoApsvietimas.getInternalChildren().add(parkiniaisviestuvai);
+        laukoApsvietimas.getInternalChildren().add(atramosgembes);
+        laukoApsvietimas.getInternalChildren().add(priedailaukoApsvietimui);
 
         //Apsvietimas - Vidaus apšvietimas add
-        vidausApsvietimas.getChildren().add(LEDPanelesA);
-        vidausApsvietimas.getChildren().add(LEDPaneles);
-        vidausApsvietimas.getChildren().add(downlight);
-        vidausApsvietimas.getChildren().add(lubiniai);
-        vidausApsvietimas.getChildren().add(sieniniai);
-        vidausApsvietimas.getChildren().add(pakabinami);
-        vidausApsvietimas.getChildren().add(avarinisApsvietimas);
-        vidausApsvietimas.getChildren().add(highBay);
+        vidausApsvietimas.getInternalChildren().add(LEDPanelesA);
+        vidausApsvietimas.getInternalChildren().add(LEDPaneles);
+        vidausApsvietimas.getInternalChildren().add(downlight);
+        vidausApsvietimas.getInternalChildren().add(lubiniai);
+        vidausApsvietimas.getInternalChildren().add(sieniniai);
+        vidausApsvietimas.getInternalChildren().add(pakabinami);
+        vidausApsvietimas.getInternalChildren().add(avarinisApsvietimas);
+        vidausApsvietimas.getInternalChildren().add(highBay);
 
         //Apsvietimas - Lauko apsvietimas - Atramos gembes
-        TreeItem<String> atramos = new TreeItem<>("Atramos");
-        TreeItem<String> gembes = new TreeItem<>("Gembės");
-        TreeItem<String> pamatai = new TreeItem<>("Pamatai");
+        FilterableTreeItem<CategoryItem> atramos = createFolder("Atramos");
+        FilterableTreeItem<CategoryItem> gembes = createFolder("Gembės");
+        FilterableTreeItem<CategoryItem> pamatai = createFolder("Pamatai");
 
         //Apsvietimas - Lauko apsvietimas - Atramos gembes add
-        atramosgembes.getChildren().add(atramos);
-        atramosgembes.getChildren().add(gembes);
-        atramosgembes.getChildren().add(pamatai);
+        atramosgembes.getInternalChildren().add(atramos);
+        atramosgembes.getInternalChildren().add(gembes);
+        atramosgembes.getInternalChildren().add(pamatai);
 
         //Apsvietimas - Vidaus apšvietimas - LED panelės
-        TreeItem<String> ipa = new TreeItem<>("IP20");
-        TreeItem<String> ipb = new TreeItem<>("IP44");
+        FilterableTreeItem<CategoryItem> ipa = createFolder("IP20");
+        FilterableTreeItem<CategoryItem> ipb = createFolder("IP44");
 
         //Apsvietimas - Vidaus apšvietimas - LED panelės add
-        LEDPaneles.getChildren().add(ipa);
-        LEDPaneles.getChildren().add(ipb);
+        LEDPaneles.getInternalChildren().add(ipa);
+        LEDPaneles.getInternalChildren().add(ipb);
 
         //Apsvietimas - Vidaus apšvietimas - Downlight
-        TreeItem<String> ipaa = new TreeItem<>("IP20");
-        TreeItem<String> ipbb = new TreeItem<>("IP44");
+        FilterableTreeItem<CategoryItem> ipaa = createFolder("IP20");
+        FilterableTreeItem<CategoryItem> ipbb = createFolder("IP44");
 
         //Apsvietimas - Vidaus apšvietimas - Downlight add
-        downlight.getChildren().add(ipaa);
-        downlight.getChildren().add(ipbb);
+        downlight.getInternalChildren().add(ipaa);
+        downlight.getInternalChildren().add(ipbb);
 
         //Apsvietimas - Vidaus apšvietimas - sieniniai add
-        TreeItem<String> ipaaa = new TreeItem<>("IP44");
-        TreeItem<String> ipbbb = new TreeItem<>("IP65");
+        FilterableTreeItem<CategoryItem> ipaaa = createFolder("IP44");
+        FilterableTreeItem<CategoryItem> ipbbb = createFolder("IP65");
 
         //Apsvietimas - Vidaus apšvietimas - sieniniai add
-        downlight.getChildren().add(ipaaa);
-        downlight.getChildren().add(ipbbb);
+        downlight.getInternalChildren().add(ipaaa);
+        downlight.getInternalChildren().add(ipbbb);
 
         //Įžeminimas ir žaibosauga - Įžeminimo strypai
-        TreeItem<String> variuotiStrypai = new TreeItem<>("Variuoti strypai");
-        TreeItem<String> cinkuotiStrypai = new TreeItem<>("Cinkuoti strypai");
+        FilterableTreeItem<CategoryItem> variuotiStrypai = createFolder("Variuoti strypai");
+        FilterableTreeItem<CategoryItem> cinkuotiStrypai = createFolder("Cinkuoti strypai");
 
         //Kabeliai - Jėgos kabeliai
-        TreeItem<String> nyyj = new TreeItem<>("NYY-J");
-        TreeItem<String> cykyj = new TreeItem<>("CYKY-J");
+        FilterableTreeItem<CategoryItem> nyyj = createFolder("NYY-J");
+        FilterableTreeItem<CategoryItem> cykyj = createFolder("CYKY-J");
 
         //Kabeliai - Jėgos kabeliai add
-        jegosKabeliai.getChildren().add(nyyj);
-        jegosKabeliai.getChildren().add(cykyj);
+        jegosKabeliai.getInternalChildren().add(nyyj);
+        jegosKabeliai.getInternalChildren().add(cykyj);
 
         //Kabeliai - Behalogeniniai kabeliai
-        TreeItem<String> cca = new TreeItem<>("Cca");
-        TreeItem<String> b2ca = new TreeItem<>("B2ca");
+        FilterableTreeItem<CategoryItem> cca = createFolder("Cca");
+        FilterableTreeItem<CategoryItem> b2ca = createFolder("B2ca");
 
         //Kabeliai - Behalogeniniai kabeliai add
-        behalogeniniaiKabeliai.getChildren().add(cca);
-        behalogeniniaiKabeliai.getChildren().add(b2ca);
+        behalogeniniaiKabeliai.getInternalChildren().add(cca);
+        behalogeniniaiKabeliai.getInternalChildren().add(b2ca);
 
         //Kabeliai - Internetinai kabeliai
-        TreeItem<String> cat5 = new TreeItem<>("Cat5");
-        TreeItem<String> cat6 = new TreeItem<>("Cat6");
+        FilterableTreeItem<CategoryItem> cat5 = createFolder("Cat5");
+        FilterableTreeItem<CategoryItem> cat6 = createFolder("Cat6");
 
         //Kabeliai - Internetinai kabeliai add
-        internetiniaiKabeliai.getChildren().add(cat5);
-        internetiniaiKabeliai.getChildren().add(cat6);
+        internetiniaiKabeliai.getInternalChildren().add(cat5);
+        internetiniaiKabeliai.getInternalChildren().add(cat6);
 
         //Kabeliai - Internetinai kabeliai - cat5
-        TreeItem<String> cat5utp = new TreeItem<>("UTP");
-        TreeItem<String> cat5ftp = new TreeItem<>("FTP");
+        FilterableTreeItem<CategoryItem> cat5utp = createFolder("UTP");
+        FilterableTreeItem<CategoryItem> cat5ftp = createFolder("FTP");
 
         //Kabeliai - Internetinai kabeliai - cat6
-        TreeItem<String> cat6utp = new TreeItem<>("UTP");
-        TreeItem<String> cat6ftp = new TreeItem<>("FTP");
+        FilterableTreeItem<CategoryItem> cat6utp = createFolder("UTP");
+        FilterableTreeItem<CategoryItem> cat6ftp = createFolder("FTP");
 
         //Kabeliai - Internetinai kabeliai - cat5 add
-        cat5.getChildren().add(cat5utp);
-        cat5.getChildren().add(cat5ftp);
+        cat5.getInternalChildren().add(cat5utp);
+        cat5.getInternalChildren().add(cat5ftp);
 
         //Kabeliai - Internetinai kabeliai - cat6 add
-        cat6.getChildren().add(cat6utp);
-        cat6.getChildren().add(cat6ftp);
+        cat6.getInternalChildren().add(cat6utp);
+        cat6.getInternalChildren().add(cat6ftp);
 
         //Vamzdžiai ir gofra - lauko
-        TreeItem<String> ape = new TreeItem<>("APE");
-        TreeItem<String> gofros = new TreeItem<>("Gofros");
-        TreeItem<String> prakalimoVamzdis = new TreeItem<>("Prakalimo vamzdis");
-        TreeItem<String> sudedamasVazdis = new TreeItem<>("Sudedamas vazdis");
+        FilterableTreeItem<CategoryItem> ape = createFolder("APE");
+        FilterableTreeItem<CategoryItem> gofros = createFolder("Gofros");
+        FilterableTreeItem<CategoryItem> prakalimoVamzdis = createFolder("Prakalimo vamzdis");
+        FilterableTreeItem<CategoryItem> sudedamasVazdis = createFolder("Sudedamas vazdis");
 
         //Vamzdžiai ir gofra - lauko add
-        lauko.getChildren().add(ape);
-        lauko.getChildren().add(gofros);
-        lauko.getChildren().add(prakalimoVamzdis);
-        lauko.getChildren().add(sudedamasVazdis);
+        lauko.getInternalChildren().add(ape);
+        lauko.getInternalChildren().add(gofros);
+        lauko.getInternalChildren().add(prakalimoVamzdis);
+        lauko.getInternalChildren().add(sudedamasVazdis);
 
         //Vamzdžiai ir gofra - vidaus
-        TreeItem<String> vGofros = new TreeItem<>("Gofros");
-        TreeItem<String> behalogeninėsGofros = new TreeItem<>("Behalogeninės gofros");
-        TreeItem<String> vamzdžiai = new TreeItem<>("Vamzdžiai");
-        TreeItem<String> behalogeniniaiVamzdžiai = new TreeItem<>("Behalogeniniai vamzdžiai");
-        TreeItem<String> gofrosSuKabeliu = new TreeItem<>("Gofros su kabeliu");
-        TreeItem<String> gofrosSuLaidu = new TreeItem<>("Gofros su laidu");
+        FilterableTreeItem<CategoryItem> vGofros = createFolder("Gofros");
+        FilterableTreeItem<CategoryItem> behalogeninėsGofros = createFolder("Behalogeninės gofros");
+        FilterableTreeItem<CategoryItem> vamzdžiai = createFolder("Vamzdžiai");
+        FilterableTreeItem<CategoryItem> behalogeniniaiVamzdžiai = createFolder("Behalogeniniai vamzdžiai");
+        FilterableTreeItem<CategoryItem> gofrosSuKabeliu = createFolder("Gofros su kabeliu");
+        FilterableTreeItem<CategoryItem> gofrosSuLaidu = createFolder("Gofros su laidu");
 
         //Vamzdžiai ir gofra - vidaus add
-        vidaus.getChildren().add(vGofros);
-        vidaus.getChildren().add(behalogeninėsGofros);
-        vidaus.getChildren().add(vamzdžiai);
-        vidaus.getChildren().add(behalogeniniaiVamzdžiai);
-        vidaus.getChildren().add(gofrosSuKabeliu);
-        vidaus.getChildren().add(gofrosSuLaidu);
+        vidaus.getInternalChildren().add(vGofros);
+        vidaus.getInternalChildren().add(behalogeninėsGofros);
+        vidaus.getInternalChildren().add(vamzdžiai);
+        vidaus.getInternalChildren().add(behalogeniniaiVamzdžiai);
+        vidaus.getInternalChildren().add(gofrosSuKabeliu);
+        vidaus.getInternalChildren().add(gofrosSuLaidu);
 
         //Vamzdžiai ir gofra - lauko
-        TreeItem<String> g450N = new TreeItem<>("g450N");
-        TreeItem<String> g750N = new TreeItem<>("g750N");
-        TreeItem<String> g1250N = new TreeItem<>("g1250N");
+        FilterableTreeItem<CategoryItem> g450N = createFolder("g450N");
+        FilterableTreeItem<CategoryItem> g750N = createFolder("g750N");
+        FilterableTreeItem<CategoryItem> g1250N = createFolder("g1250N");
 
         //Vamzdžiai ir gofra - vidaus
-        TreeItem<String> vG320N = new TreeItem<>("320N");
-        TreeItem<String> vG750N = new TreeItem<>("750N");
+        FilterableTreeItem<CategoryItem> vG320N = createFolder("320N");
+        FilterableTreeItem<CategoryItem> vG750N = createFolder("750N");
 
         //Vamzdžiai ir gofra - lauko add
-        gofros.getChildren().add(g450N);
-        gofros.getChildren().add(g750N);
-        gofros.getChildren().add(g1250N);
+        gofros.getInternalChildren().add(g450N);
+        gofros.getInternalChildren().add(g750N);
+        gofros.getInternalChildren().add(g1250N);
 
         //Vamzdžiai ir gofra - vidaus add
-        vGofros.getChildren().add(vG320N);
-        vGofros.getChildren().add(vG750N);
-
+        vGofros.getInternalChildren().add(vG320N);
+        vGofros.getInternalChildren().add(vG750N);
 
         //Instaliacinės prekės - Jungikliai ir kištukiniai lizdai
-        TreeItem<String> potinkiniaiJungikliai = new TreeItem<>("Potinkiniai jungikliai ir kištukiniai lizdai");
-        TreeItem<String> virstinkiniaiJungikliai = new TreeItem<>("Virštinkiniai jungikliai ir kištukiniai lizdai");
-        TreeItem<String> pramoniniaiLizdai = new TreeItem<>("Pramoniniai lizdai ir kištukai");
+        FilterableTreeItem<CategoryItem> potinkiniaiJungikliai = createFolder("Potinkiniai jungikliai ir kištukiniai lizdai");
+        FilterableTreeItem<CategoryItem> virstinkiniaiJungikliai = createFolder("Virštinkiniai jungikliai ir kištukiniai lizdai");
+        FilterableTreeItem<CategoryItem> pramoniniaiLizdai = createFolder("Pramoniniai lizdai ir kištukai");
 
         //Instaliacinės prekės - Jungikliai ir kištukiniai lizdai add
-        jungikliaiIrKistukiniaiLizdai.getChildren().add(potinkiniaiJungikliai);
-        jungikliaiIrKistukiniaiLizdai.getChildren().add(virstinkiniaiJungikliai);
-        jungikliaiIrKistukiniaiLizdai.getChildren().add(pramoniniaiLizdai);
+        jungikliaiIrKistukiniaiLizdai.getInternalChildren().add(potinkiniaiJungikliai);
+        jungikliaiIrKistukiniaiLizdai.getInternalChildren().add(virstinkiniaiJungikliai);
+        jungikliaiIrKistukiniaiLizdai.getInternalChildren().add(pramoniniaiLizdai);
 
         //Instaliacinės prekės - Potinkinės dėžutės
-        TreeItem<String> muroDezute = new TreeItem<>("Dėžutė į mūrą");
-        TreeItem<String> gipsoDezute = new TreeItem<>("Dėžutė į gipsą");
+        FilterableTreeItem<CategoryItem> muroDezute = createFolder("Dėžutė į mūrą");
+        FilterableTreeItem<CategoryItem> gipsoDezute = createFolder("Dėžutė į gipsą");
 
         //Instaliacinės prekės - Potinkinės dėžutės add
-        potinkinesDezutes.getChildren().add(muroDezute);
-        potinkinesDezutes.getChildren().add(gipsoDezute);
+        potinkinesDezutes.getInternalChildren().add(muroDezute);
+        potinkinesDezutes.getInternalChildren().add(gipsoDezute);
         //Instaliacinės prekės - Šildymo elementai
-        TreeItem<String> sildymoKilimėliai = new TreeItem<>("Šildymo kilimėliai");
-        TreeItem<String> sildymoKabeliai = new TreeItem<>("Šildymo kabeliai");
-        TreeItem<String> sildymoĮranga = new TreeItem<>("Šildymo įranga");
+        FilterableTreeItem<CategoryItem> sildymoKilimėliai = createFolder("Šildymo kilimėliai");
+        FilterableTreeItem<CategoryItem> sildymoKabeliai = createFolder("Šildymo kabeliai");
+        FilterableTreeItem<CategoryItem> sildymoĮranga = createFolder("Šildymo įranga");
 
         //Instaliacinės prekės - Šildymo elementai add
-        sildymoElementai.getChildren().add(sildymoKilimėliai);
-        sildymoElementai.getChildren().add(sildymoKabeliai);
-        sildymoElementai.getChildren().add(sildymoĮranga);
+        sildymoElementai.getInternalChildren().add(sildymoKilimėliai);
+        sildymoElementai.getInternalChildren().add(sildymoKabeliai);
+        sildymoElementai.getInternalChildren().add(sildymoĮranga);
 
         //Instaliacinės prekės - Grindinės dėžutės
-        TreeItem<String> gridninesPlastikinesDezutes = new TreeItem<>("Plastikinės");
-        TreeItem<String> grindinesMetalinesDezutes = new TreeItem<>("Metalinės");
+        FilterableTreeItem<CategoryItem> gridninesPlastikinesDezutes = createFolder("Plastikinės");
+        FilterableTreeItem<CategoryItem> grindinesMetalinesDezutes = createFolder("Metalinės");
 
         //Instaliacinės prekės - Grindinės dėžutės add
-        grindinesDezutes.getChildren().add(gridninesPlastikinesDezutes);
-        grindinesDezutes.getChildren().add(grindinesMetalinesDezutes);
+        grindinesDezutes.getInternalChildren().add(gridninesPlastikinesDezutes);
+        grindinesDezutes.getInternalChildren().add(grindinesMetalinesDezutes);
 
         //Instaliacinės prekės - Judesio ir būvio jutikliai
-        TreeItem<String> judesio = new TreeItem<>("Judesio");
-        TreeItem<String> buvio = new TreeItem<>("Būvio");
+        FilterableTreeItem<CategoryItem> judesio = createFolder("Judesio");
+        FilterableTreeItem<CategoryItem> buvio = createFolder("Būvio");
 
         //Instaliacinės prekės - Judesio ir būvio jutikliai add
-        judesioIrBuvioJutikliai.getChildren().add(judesio);
-        judesioIrBuvioJutikliai.getChildren().add(buvio);
+        judesioIrBuvioJutikliai.getInternalChildren().add(judesio);
+        judesioIrBuvioJutikliai.getInternalChildren().add(buvio);
 
         //Instaliacinės prekės - Judesio ir būvio jutikliai Judesio
-        TreeItem<String> virstinkiniai = new TreeItem<>("Virštinkiniai");
-        TreeItem<String> potinkiniai = new TreeItem<>("Potinkiniai");
+        FilterableTreeItem<CategoryItem> virstinkiniai = createFolder("Virštinkiniai");
+        FilterableTreeItem<CategoryItem> potinkiniai = createFolder("Potinkiniai");
 
         //Instaliacinės prekės - Judesio ir būvio jutikliai Būvio
-        TreeItem<String> virstinkiniaiB = new TreeItem<>("Virštinkiniai");
-        TreeItem<String> potinkiniaiB = new TreeItem<>("Potinkiniai");
+        FilterableTreeItem<CategoryItem> virstinkiniaiB = createFolder("Virštinkiniai");
+        FilterableTreeItem<CategoryItem> potinkiniaiB = createFolder("Potinkiniai");
 
         //Instaliacinės prekės - Judesio ir būvio jutikliai Judesio add
-        judesio.getChildren().add(virstinkiniai);
-        judesio.getChildren().add(potinkiniai);
+        judesio.getInternalChildren().add(virstinkiniai);
+        judesio.getInternalChildren().add(potinkiniai);
         //Instaliacinės prekės - Judesio ir būvio jutikliai Būvio add
-        buvio.getChildren().add(virstinkiniaiB);
-        buvio.getChildren().add(potinkiniaiB);
+        buvio.getInternalChildren().add(virstinkiniaiB);
+        buvio.getInternalChildren().add(potinkiniaiB);
 
         //Įžeminimas ir žaibosauga - Įžeminimo strypai
-        izeminimoStrypai.getChildren().add(variuotiStrypai);
-        izeminimoStrypai.getChildren().add(cinkuotiStrypai);
+        izeminimoStrypai.getInternalChildren().add(variuotiStrypai);
+        izeminimoStrypai.getInternalChildren().add(cinkuotiStrypai);
 
         //Metalinės konstrukcijos - kopecios
-        TreeItem<String> kopKarstoCinkavimo = new TreeItem<>("Karšto cinkavimo");
-        TreeItem<String> kopSaltoCinkavimo = new TreeItem<>("Šalto cinkavimo");
+        FilterableTreeItem<CategoryItem> kopKarstoCinkavimo = createFolder("Karšto cinkavimo");
+        FilterableTreeItem<CategoryItem> kopSaltoCinkavimo = createFolder("Šalto cinkavimo");
 
         //Metalinės konstrukcijos - loveliai
-        TreeItem<String> lovKarstoCinkavimo = new TreeItem<>("Karšto cinkavimo");
-        TreeItem<String> lovSaltoCinkavimo = new TreeItem<>("Šalto cinkavimo");
+        FilterableTreeItem<CategoryItem> lovKarstoCinkavimo = createFolder("Karšto cinkavimo");
+        FilterableTreeItem<CategoryItem> lovSaltoCinkavimo = createFolder("Šalto cinkavimo");
 
         //Metalinės konstrukcijos - kopecios
-        kopecios.getChildren().add(kopKarstoCinkavimo);
-        kopecios.getChildren().add(kopSaltoCinkavimo);
+        kopecios.getInternalChildren().add(kopKarstoCinkavimo);
+        kopecios.getInternalChildren().add(kopSaltoCinkavimo);
 
         //Metalinės konstrukcijos - loveliai
-        loveliai.getChildren().add(lovKarstoCinkavimo);
-        loveliai.getChildren().add(lovSaltoCinkavimo);
+        loveliai.getInternalChildren().add(lovKarstoCinkavimo);
+        loveliai.getInternalChildren().add(lovSaltoCinkavimo);
 
         //Elektromechanika - Automatiniai jungikliai
-        TreeItem<String> e6kA = new TreeItem<>("6kA");
-        TreeItem<String> e10kA = new TreeItem<>("10kA");
+        FilterableTreeItem<CategoryItem> e6kA = createFolder("6kA");
+        FilterableTreeItem<CategoryItem> e10kA = createFolder("10kA");
 
         //Elektromechanika - Kirtikliai
-        TreeItem<String> moduliniai = new TreeItem<>("Moduliniai");
-        TreeItem<String> paneliniai = new TreeItem<>("Paneliniai");
+        FilterableTreeItem<CategoryItem> moduliniai = createFolder("Moduliniai");
+        FilterableTreeItem<CategoryItem> paneliniai = createFolder("Paneliniai");
 
         //Elektromechanika - Automatiniai jungikliai
-        automatiniaiJungikliai.getChildren().add(e6kA);
-        automatiniaiJungikliai.getChildren().add(e10kA);
+        automatiniaiJungikliai.getInternalChildren().add(e6kA);
+        automatiniaiJungikliai.getInternalChildren().add(e10kA);
 
         //Elektromechanika - Kirtikliai
-        kirtikliai.getChildren().add(moduliniai);
-        kirtikliai.getChildren().add(paneliniai);
+        kirtikliai.getInternalChildren().add(moduliniai);
+        kirtikliai.getInternalChildren().add(paneliniai);
 
-        product_catalog_tree.setRoot(root);
+        return root;
     }
 
 
@@ -664,46 +664,13 @@ public class DashboardController extends Main implements Initializable {
         );
     }
 
-    public void selectItem(MouseEvent event) {
-        TreeItem<String> item = product_catalog_tree.getSelectionModel().getSelectedItem();
-        List<Categories> categories = CategoriesDAO.selectCategory(namer(item.getValue()));
-        List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
-        int number = 0;
-        table.getItems().clear();
-        for (Categories category : categories) {
-            for (ProductCatalog product : products) {
-                if (category.getId() == product.getGroupId()) {
-                    number++;
-                    loadDataToTable(product);
-                }
-            }
-        }
-        countAll.setText("Išviso įrašų : " + number);
-
-    }
-
-    public String namer(String name) {
-        if (name.equals("Visa klasifikacija")) {
-            name = "Home";
-        }
-        return name;
-    }
-
-    public void filterButtonOnAction(ActionEvent actionEvent) {
-//        List<ProductCatalog> products = ProductCatalogDAO.searchByTreeItemName(paieskosLaukelis.getText());
-        table.getItems().clear();
-
-//        for (ProductCatalog product : products) {
-//            loadDataToTable(product);
-    }
-
-
     /**
      * NUO CIA PRASIDEDA AKTYVAUS FILTRAVIMO KODAS
      */
 
     public TitledPane leftTitledPane;
-    public FilterableTreeItem<CategoryItem> product_catalog_tree2;
+    TreeView<CategoryItem> treeView = new TreeView<>();
+
 
     public void createContents() {
         VBox vBoxElement = new VBox(6);
@@ -731,46 +698,44 @@ public class DashboardController extends Main implements Initializable {
     }
 
     private Node createFilteredTree() {
-        FilterableTreeItem<CategoryItem> root = getTreeModel();
+        FilterableTreeItem<CategoryItem> root = loadsProductsToCatalogTree();
         root.predicateProperty().bind(Bindings.createObjectBinding(() -> {
             if (paieskosLaukelis.getText() == null || paieskosLaukelis.getText().isEmpty())
                 return null;
             return TreeItemPredicate.create(categoryItem -> categoryItem.toString().contains(paieskosLaukelis.getText()));
         }, paieskosLaukelis.textProperty()));
 
-        TreeView<CategoryItem> treeView = new TreeView<>(root);
+        treeView.setRoot(root);
         treeView.setShowRoot(false);
-        Pane leftPane = new Pane(treeView);
-        return leftPane;
+        treeView.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                TreeItem<CategoryItem> item = treeView.getSelectionModel().getSelectedItem();
+                System.out.println(item.getValue().getName());
+                List<Categories> categories = CategoriesDAO.selectCategory(item.getValue().getName());
+                List<ProductCatalog> products = ProductCatalogDAO.displayAllItems();
+                int number = 0;
+                table.getItems().clear();
+                for (Categories category : categories) {
+                    for (ProductCatalog product : products) {
+                        if (category.getId() == product.getGroupId()) {
+                            number++;
+                            loadDataToTable(product);
+                        }
+                    }
+                }
+                countAll.setText("Išviso įrašų : " + number);
+            }
+        });
+        return treeView;
     }
 
-    private FilterableTreeItem<CategoryItem> getTreeModel() {
-        FilterableTreeItem<CategoryItem> root = new FilterableTreeItem<>(new CategoryItem("Root"));
-        product_catalog_tree2 = createFolder("Folder 1");
-
-        product_catalog_tree2.setExpanded(true);
-        root.getInternalChildren().add(product_catalog_tree2);
-        product_catalog_tree2.getInternalChildren().add(createFolder("Folder 2"));
-        root.getInternalChildren().add(createFolder("Folder 3"));
-
-        return root;
-    }
 
     private FilterableTreeItem<CategoryItem> createFolder(String name) {
         FilterableTreeItem<CategoryItem> folder = new FilterableTreeItem<>(new CategoryItem(name));
-        getCategoryList().forEach(categoryItem -> folder.getInternalChildren().add(new FilterableTreeItem<>(categoryItem)));
+
 
         return folder;
-    }
-
-    private Iterable<CategoryItem> getCategoryList() {
-        ObservableList<CategoryItem> categoryList = FXCollections.observableArrayList(
-                new CategoryItem("Nicholson"),
-                new CategoryItem("Brando"),
-                new CategoryItem("De Niro"),
-                new CategoryItem("Pacino"),
-                new CategoryItem("Daniel"));
-        return categoryList;
     }
 
 
