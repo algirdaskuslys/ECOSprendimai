@@ -17,6 +17,14 @@
                     <target>7</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -45,6 +53,14 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.13</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/at.bestsolution.eclipse/org.eclipse.fx.ui.controls -->
+        <dependency>
+            <groupId>at.bestsolution.eclipse</groupId>
+            <artifactId>org.eclipse.fx.ui.controls</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

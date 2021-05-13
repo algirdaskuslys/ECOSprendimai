@@ -1,5 +1,6 @@
 package sample.controller;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,27 +20,25 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import javafx.stage.Window;
 import javafx.util.Callback;
-import org.apache.poi.hssf.util.HSSFColor;
 import sample.JPA.*;
 import sample.Main;
 import sample.utils.Constants;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
+import org.eclipse.fx.ui.controls.tree.TreeItemPredicate;
 
 public class DashboardController extends Main implements Initializable {
 
@@ -518,19 +518,22 @@ public class DashboardController extends Main implements Initializable {
         stock.prefWidthProperty().bind(table.widthProperty().multiply(0.194));
 
         number.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog>, ObservableValue<ProductCatalog>>() {
-            @Override public ObservableValue<ProductCatalog> call(TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog> p) {
+            @Override
+            public ObservableValue<ProductCatalog> call(TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog> p) {
                 return new ReadOnlyObjectWrapper(p.getValue());
             }
         });
 
         number.setCellFactory(new Callback<TableColumn<ProductCatalog, ProductCatalog>, TableCell<ProductCatalog, ProductCatalog>>() {
-            @Override public TableCell<ProductCatalog, ProductCatalog> call(TableColumn<ProductCatalog, ProductCatalog> param) {
+            @Override
+            public TableCell<ProductCatalog, ProductCatalog> call(TableColumn<ProductCatalog, ProductCatalog> param) {
                 return new TableCell<ProductCatalog, ProductCatalog>() {
-                    @Override protected void updateItem(ProductCatalog item, boolean empty) {
+                    @Override
+                    protected void updateItem(ProductCatalog item, boolean empty) {
                         super.updateItem(item, empty);
 
                         if (this.getTableRow() != null && item != null) {
-                            setText(this.getTableRow().getIndex()+1+"");
+                            setText(this.getTableRow().getIndex() + 1 + "");
                         } else {
                             setText("");
                         }
@@ -556,16 +559,15 @@ public class DashboardController extends Main implements Initializable {
 
     public void loadDataToTable(ProductCatalog productCatalog) {
 
-        table.getItems().add( productCatalog);
+        table.getItems().add(productCatalog);
 
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        loadsProductsToCatalogTree();
         loadColumnToTable();
+        createContents();
     }
 
     public void openExcelFileFromDialog() {
@@ -627,9 +629,9 @@ public class DashboardController extends Main implements Initializable {
         }
 
         Label label = new Label("Pakeista produktų :" + " " + countAffectedProducts + "\n" +
-                    "Excel'yje yra produktų : " + countExcelProducts +"\n" +
-                    "Pridėta naujų produktų : " + countNewProducts + "\n" +
-                    "Duombazėje nepakeistų produktų : " + countDBProduducts);
+                "Excel'yje yra produktų : " + countExcelProducts + "\n" +
+                "Pridėta naujų produktų : " + countNewProducts + "\n" +
+                "Duombazėje nepakeistų produktų : " + countDBProduducts);
         final Popup popup = new Popup();
         Button hide = new Button("Ok");
         hide.setOnAction(new EventHandler<ActionEvent>() {
@@ -637,7 +639,8 @@ public class DashboardController extends Main implements Initializable {
             public void handle(ActionEvent event) {
                 popup.hide();
             }
-        });hide.setLayoutX(140);
+        });
+        hide.setLayoutX(140);
         hide.setLayoutY(115);
         label.setStyle(" -fx-background-color: grey; -fx-text-fill: white;");
         label.setMinWidth(300);
@@ -647,10 +650,6 @@ public class DashboardController extends Main implements Initializable {
         if (countAffectedProducts > 0) {
             popup.show(parent);
         }
-
-        // TODO:
-        //  3. Sutvarkyti filtravima. Mantas
-
 
     }
 
@@ -675,7 +674,7 @@ public class DashboardController extends Main implements Initializable {
             for (ProductCatalog product : products) {
                 if (category.getId() == product.getGroupId()) {
                     number++;
-                    loadDataToTable( product);
+                    loadDataToTable(product);
                 }
             }
         }
@@ -691,13 +690,88 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void filterButtonOnAction(ActionEvent actionEvent) {
-        List<ProductCatalog> products = ProductCatalogDAO.searchByTreeItemName(paieskosLaukelis.getText());
+//        List<ProductCatalog> products = ProductCatalogDAO.searchByTreeItemName(paieskosLaukelis.getText());
         table.getItems().clear();
-        for (ProductCatalog product : products) {
-            loadDataToTable(product);
-        }
+
+//        for (ProductCatalog product : products) {
+//            loadDataToTable(product);
     }
 
+
+    /**
+     * NUO CIA PRASIDEDA AKTYVAUS FILTRAVIMO KODAS
+     */
+
+    public TitledPane leftTitledPane;
+    public FilterableTreeItem<CategoryItem> product_catalog_tree2;
+
+    public void createContents() {
+        VBox vBoxElement = new VBox(6);
+        vBoxElement.getChildren().add(createFilterPane());
+        Node demoPane = createDemoPane();
+        VBox.setVgrow(demoPane, Priority.ALWAYS);
+        vBoxElement.getChildren().add(demoPane);
+    }
+
+
+    private Node createFilterPane() {
+        paieskosLaukelis.setPromptText("Įveskite kategorijos pavadinimą filtravimui ...");
+        TitledPane pane = new TitledPane("Filter", paieskosLaukelis);
+        pane.setCollapsible(false);
+        return pane;
+    }
+
+    private Node createDemoPane() {
+        HBox hBoxElement = new HBox(6);
+        Node filteredTree = createFilteredTree();
+        HBox.setHgrow(filteredTree, Priority.ALWAYS);
+        hBoxElement.getChildren().add(filteredTree);
+        leftTitledPane.setContent(filteredTree);
+        return new BorderPane(hBoxElement);
+    }
+
+    private Node createFilteredTree() {
+        FilterableTreeItem<CategoryItem> root = getTreeModel();
+        root.predicateProperty().bind(Bindings.createObjectBinding(() -> {
+            if (paieskosLaukelis.getText() == null || paieskosLaukelis.getText().isEmpty())
+                return null;
+            return TreeItemPredicate.create(categoryItem -> categoryItem.toString().contains(paieskosLaukelis.getText()));
+        }, paieskosLaukelis.textProperty()));
+
+        TreeView<CategoryItem> treeView = new TreeView<>(root);
+        treeView.setShowRoot(false);
+        Pane leftPane = new Pane(treeView);
+        return leftPane;
+    }
+
+    private FilterableTreeItem<CategoryItem> getTreeModel() {
+        FilterableTreeItem<CategoryItem> root = new FilterableTreeItem<>(new CategoryItem("Root"));
+        product_catalog_tree2 = createFolder("Folder 1");
+
+        product_catalog_tree2.setExpanded(true);
+        root.getInternalChildren().add(product_catalog_tree2);
+        product_catalog_tree2.getInternalChildren().add(createFolder("Folder 2"));
+        root.getInternalChildren().add(createFolder("Folder 3"));
+
+        return root;
+    }
+
+    private FilterableTreeItem<CategoryItem> createFolder(String name) {
+        FilterableTreeItem<CategoryItem> folder = new FilterableTreeItem<>(new CategoryItem(name));
+        getCategoryList().forEach(categoryItem -> folder.getInternalChildren().add(new FilterableTreeItem<>(categoryItem)));
+
+        return folder;
+    }
+
+    private Iterable<CategoryItem> getCategoryList() {
+        ObservableList<CategoryItem> categoryList = FXCollections.observableArrayList(
+                new CategoryItem("Nicholson"),
+                new CategoryItem("Brando"),
+                new CategoryItem("De Niro"),
+                new CategoryItem("Pacino"),
+                new CategoryItem("Daniel"));
+        return categoryList;
+    }
 
 
 }
