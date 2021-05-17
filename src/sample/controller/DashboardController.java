@@ -501,7 +501,7 @@ public class DashboardController extends Main implements Initializable {
 
     public void loadColumnToTable() {
 
-        TableColumn number = new TableColumn("No.");
+        TableColumn number = new TableColumn("#");
         TableColumn id = new TableColumn("Id");
         TableColumn catalogNo = new TableColumn("catalogNo");
         TableColumn symbol = new TableColumn("symbol");
@@ -616,9 +616,10 @@ public class DashboardController extends Main implements Initializable {
                     ProductCatalogDAO.updateByCatalog_no(excelProduct.getPriceNet(), dbProduct.getId());
                     countAffectedProducts++;
 
-                } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet()) {
+                } else if (dbProduct.getPriceNet() == excelProduct.getPriceNet() && dbProduct.getCatalogNo() == excelProduct.getCatalogNo()) {
                     isNewProduct = false;
-                    countDBProduducts++;
+//                    countDBProduducts++;
+                    countDBProduducts = dbProducts.size() - countAffectedProducts;
                 }
 
             }
@@ -647,9 +648,9 @@ public class DashboardController extends Main implements Initializable {
         label.setMinHeight(150);
         label.setAlignment(Pos.CENTER);
         popup.getContent().addAll(label, hide);
-        if (countAffectedProducts > 0) {
+//        if (countAffectedProducts > 0) {
             popup.show(parent);
-        }
+//        }
 
     }
 

@@ -10,10 +10,13 @@
         <TableView fx:id="table" layoutX="387.0" layoutY="56.0" prefHeight="463.0" prefWidth="537.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="56.0">
             <columns>
             </columns>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
         </TableView>
         <TextField id="paieskosLaukelis" fx:id="paieskosLaukelis" layoutX="3.0" layoutY="16.0" prefHeight="25.0" prefWidth="380.0" AnchorPane.topAnchor="16.0" />
-      <TitledPane fx:id="leftTitledPane" animated="false" collapsible="false" layoutX="3.0" layoutY="56.0" prefHeight="380.0" prefWidth="380.0" text="Prekių kategorijų medis"  AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0" />
-        <TitledPane animated="false" collapsible="false" layoutX="929.0" layoutY="56.0" prefHeight="356.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+      <TitledPane fx:id="leftTitledPane" animated="false" collapsible="false" layoutX="3.0" layoutY="56.0" prefHeight="380.0" prefWidth="380.0" text="Prekių kategorijų medis" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0" />
+        <TitledPane animated="false" collapsible="false" layoutX="929.0" layoutY="56.0" pickOnBounds="false" prefHeight="356.0" prefWidth="414.0" text="Pasirinktos prekes stulpeleje pavadinimas" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="330.0" prefWidth="403.0">
                     <children>
@@ -55,6 +58,6 @@
         <Label layoutX="1170.0" layoutY="24.0" text="Vartotojas :" AnchorPane.rightAnchor="112.0" AnchorPane.topAnchor="24.0" />
         <Label layoutX="1239.0" layoutY="24.0" prefHeight="17.0" prefWidth="66.0" style="-fx-font-weight: bold;" text="Julius" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="24.0" />
         <Label fx:id="countAll" alignment="CENTER" layoutX="389.0" layoutY="519.0" prefHeight="17.0" prefWidth="537.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="416.0" />
-        <Button fx:id="open_file" focusTraversable="false" graphicTextGap="0.0" layoutX="927.0" layoutY="16.0" mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Atnaujinti kainas..." AnchorPane.rightAnchor="303.0" AnchorPane.topAnchor="16.0" />
+        <Button fx:id="open_file" focusTraversable="false" graphicTextGap="0.0" layoutX="929.0" layoutY="16.0" mnemonicParsing="false" onAction="#openExcelFileFromDialog" text="Įkelti Excel failą..." AnchorPane.rightAnchor="309.0" AnchorPane.topAnchor="16.0" />
     </children>
 </AnchorPane>
